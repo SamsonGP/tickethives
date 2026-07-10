@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Ticket, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
+import LogoIcon from "./LogoIcon";
 
 export default function Footer() {
   return (
@@ -29,7 +30,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
-                <Ticket className="w-5 h-5 text-white" />
+                <LogoIcon className="w-6 h-6 text-white" />
               </div>
               <span className="text-xl font-extrabold tracking-tight">Tickethives</span>
             </div>
