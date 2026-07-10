@@ -81,8 +81,8 @@ export default function HomePage() {
               {/* Stats */}
               <div className="flex flex-wrap justify-center lg:justify-start gap-6 sm:gap-8 lg:gap-12 animate-slide-up" style={{ animationDelay: "0.4s" }}>
                 {[
-                  { value: "8", label: "Matches Left" },
-                  { value: "8", label: "Teams Remain" },
+                  { value: "6", label: "Matches Left" },
+                  { value: "6", label: "Teams Remain" },
                   { value: "4", label: "Rounds to Go" },
                   { value: "1", label: "Champion" },
                 ].map((stat) => (
