@@ -3,24 +3,6 @@ import { Match } from "@/types";
 export const matches: Match[] = [
   // ==================== QUARTER-FINALS ====================
   {
-    id: "match-98",
-    matchNumber: 98,
-    stage: "Quarter-Final",
-    teamA: { name: "Spain", code: "ESP", flag: "🇪🇸" },
-    teamB: { name: "Belgium", code: "BEL", flag: "🇧🇪" },
-    venue: { name: "SoFi Stadium", city: "Inglewood, CA", country: "USA", capacity: 70240 },
-    date: "2026-07-10",
-    time: "12:00",
-    image: "/images/stadium-2.jpg",
-    featured: true,
-    ticketCategories: [
-      { id: "cat-98a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 4500, available: 28, section: "VIP Level" },
-      { id: "cat-98b", name: "Category 1", description: "Premium seats with excellent pitch views", price: 1950, available: 150, section: "Lower Tier" },
-      { id: "cat-98c", name: "Category 2", description: "Great views of the action from mid-tier seating", price: 1172, available: 290, section: "Mid Tier" },
-      { id: "cat-98d", name: "Category 3", description: "Affordable seats with electric atmosphere", price: 580, available: 580, section: "Upper Tier" },
-    ],
-  },
-  {
     id: "match-99",
     matchNumber: 99,
     stage: "Quarter-Final",
@@ -62,8 +44,8 @@ export const matches: Match[] = [
     id: "match-101",
     matchNumber: 101,
     stage: "Semi-Final",
-    teamA: { name: "Winner QF1", code: "QF1", flag: "🏳️" },
-    teamB: { name: "Winner QF2", code: "QF2", flag: "🏳️" },
+    teamA: { name: "France", code: "FRA", flag: "🇫🇷" },
+    teamB: { name: "Spain", code: "ESP", flag: "🇪🇸" },
     venue: { name: "AT&T Stadium", city: "Arlington, TX", country: "USA", capacity: 80000 },
     date: "2026-07-14",
     time: "14:00",
