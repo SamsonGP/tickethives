@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 import LogoIcon from "./LogoIcon";
 
 export default function Footer() {
@@ -90,10 +90,6 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-primary-400" />
                 <span className="text-sm text-primary-300">support@tickethives.com</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-primary-400" />
-                <span className="text-sm text-primary-300">+1 (800) 555-0199</span>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-primary-400 mt-0.5" />
