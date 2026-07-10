@@ -3,24 +3,6 @@ import { Match } from "@/types";
 export const matches: Match[] = [
   // ==================== QUARTER-FINALS ====================
   {
-    id: "match-97",
-    matchNumber: 97,
-    stage: "Quarter-Final",
-    teamA: { name: "France", code: "FRA", flag: "🇫🇷" },
-    teamB: { name: "Morocco", code: "MAR", flag: "🇲🇦" },
-    venue: { name: "Gillette Stadium", city: "Foxborough, MA", country: "USA", capacity: 65878 },
-    date: "2026-07-09",
-    time: "16:00",
-    image: "/images/stadium-1.jpg",
-    featured: true,
-    ticketCategories: [
-      { id: "cat-97a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 4200, available: 35, section: "VIP Level" },
-      { id: "cat-97b", name: "Category 1", description: "Premium seats with excellent pitch views", price: 1890, available: 180, section: "Lower Tier" },
-      { id: "cat-97c", name: "Category 2", description: "Great views of the action from mid-tier seating", price: 1049, available: 320, section: "Mid Tier" },
-      { id: "cat-97d", name: "Category 3", description: "Affordable seats with electric atmosphere", price: 550, available: 650, section: "Upper Tier" },
-    ],
-  },
-  {
     id: "match-98",
     matchNumber: 98,
     stage: "Quarter-Final",
