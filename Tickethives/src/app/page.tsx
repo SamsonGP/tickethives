@@ -26,7 +26,7 @@ export default function HomePage() {
         {/* Mobile background image with overlay */}
         <div className="lg:hidden absolute inset-0 z-0">
           <Image
-            src="/images/hero-stadium-main.jpg"
+            src="/images/NJNY.png"
             alt="Packed World Cup stadium full of fans"
             fill
             className="object-cover"
@@ -99,7 +99,7 @@ export default function HomePage() {
               <div className="relative w-full max-w-[560px]">
                 <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl shadow-black/30 border-2 border-white/10 transform rotate-1 hover:rotate-0 transition-transform duration-500 aspect-[16/10]">
                   <Image
-                    src="/images/hero-stadium-main.jpg"
+                    src="/images/NJNY.png"
                     alt="Packed World Cup stadium full of fans"
                     fill
                     className="object-cover"
