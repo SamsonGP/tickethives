@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ShoppingCart, Menu, X, Ticket, Search } from "lucide-react";
+import { ShoppingCart, Menu, X, Search } from "lucide-react";
+import LogoIcon from "./LogoIcon";
 import { useCart } from "@/context/CartContext";
 
 export default function Header() {
@@ -16,7 +17,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center shadow-lg shadow-primary-500/30 group-hover:shadow-primary-500/50 transition-shadow">
-              <Ticket className="w-5 h-5 text-white" />
+              <LogoIcon className="w-6 h-6 text-white" />
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-extrabold text-primary-900 leading-tight tracking-tight">
