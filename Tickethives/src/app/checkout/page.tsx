@@ -9,7 +9,7 @@ import {
 import { useCart } from "@/context/CartContext";
 
 export default function CheckoutPage() {
-  const { items, removeItem, updateQuantity, totalItems, totalPrice } = useCart();
+  const { items, removeItem, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
   const [step, setStep] = useState<"cart" | "details">("cart");
 
   const discount = totalPrice * 0.10;
@@ -104,13 +104,22 @@ export default function CheckoutPage() {
           <div className="lg:col-span-2">
             {step === "cart" && (
               <div className="space-y-4">
-                <Link
-                  href="/matches"
-                  className="inline-flex items-center gap-2 text-sm text-primary-600 font-medium hover:text-primary-700 mb-4"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  Continue Shopping
-                </Link>
+                <div className="flex items-center justify-between mb-4">
+                  <Link
+                    href="/matches"
+                    className="inline-flex items-center gap-2 text-sm text-primary-600 font-medium hover:text-primary-700"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    Continue Shopping
+                  </Link>
+                  <button
+                    onClick={clearCart}
+                    className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-red-500 font-medium px-3 py-1.5 rounded-lg hover:bg-red-50 transition-all"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    Clear Cart
+                  </button>
+                </div>
 
                 {items.map((item) => (
                   <div
@@ -180,6 +189,14 @@ export default function CheckoutPage() {
                   className="w-full mt-6 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl font-bold text-lg hover:from-primary-700 hover:to-primary-800 transition-all shadow-lg shadow-primary-500/25"
                 >
                   Proceed to Checkout
+                </button>
+
+                <button
+                  onClick={clearCart}
+                  className="w-full py-3 text-sm text-gray-400 hover:text-red-500 font-medium rounded-xl hover:bg-red-50 transition-all flex items-center justify-center gap-2"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Clear Cart
                 </button>
               </div>
             )}
