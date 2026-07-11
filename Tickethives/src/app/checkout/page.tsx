@@ -16,6 +16,17 @@ export default function CheckoutPage() {
   const grandTotal = totalPrice - discount;
 
   const openLiveChat = () => {
+    // Fire Google Ads purchase conversion
+    const gtag = (window as unknown as Record<string, unknown>).gtag as ((...args: unknown[]) => void) | undefined;
+    if (typeof gtag === "function") {
+      gtag("event", "conversion", {
+        send_to: "AW-18314430129/wj_9CKDRsc4cELGNgJ1E",
+        value: grandTotal,
+        currency: "USD",
+        transaction_id: `TH-${Date.now()}`,
+      });
+    }
+
     const Tawk_API = (window as unknown as Record<string, unknown>).Tawk_API as Record<string, unknown> | undefined;
     if (Tawk_API && typeof Tawk_API.openChat === "function") {
       (Tawk_API.openChat as () => void)();
