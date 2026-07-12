@@ -49,7 +49,7 @@ export const matches: Match[] = [
     date: "2026-07-18",
     time: "22:00",
     image: "/images/stadium-7.jpg",
-    featured: false,
+    featured: true,
     ticketCategories: [
       { id: "cat-103a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 2600, available: 55, section: "VIP Level" },
       { id: "cat-103b", name: "Category 1", description: "Premium seats with excellent pitch views", price: 1100, available: 200, section: "Lower Tier" },
