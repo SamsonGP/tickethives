@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { getMatchById } from "@/data/matches";
 import { useCart } from "@/context/CartContext";
-import { englandVsArgentinaSeats, franceVsSpainSeats, seatCategoryLabels } from "@/data/seatListings";
+import { englandVsArgentinaSeats, finalMatchSeats, franceVsSpainSeats, seatCategoryLabels, thirdPlacePlayoffSeats } from "@/data/seatListings";
 
 export default function MatchDetailPage() {
   const params = useParams();
@@ -36,20 +36,28 @@ export default function MatchDetailPage() {
     ? franceVsSpainSeats
     : match.id === "match-102"
       ? englandVsArgentinaSeats
-      : [];
+      : match.id === "match-103"
+        ? thirdPlacePlayoffSeats
+        : match.id === "match-104"
+          ? finalMatchSeats
+          : [];
   const seatCategoryMap = match.id === "match-101"
     ? { upper: "cat-101d", cat3: "cat-101d", cat2: "cat-101c", cat1: "cat-101b" }
-    : { upper: "cat-102d", cat3: "cat-102d", cat2: "cat-102c", cat1: "cat-102b" };
+    : match.id === "match-102"
+      ? { upper: "cat-102d", cat3: "cat-102d", cat2: "cat-102c", cat1: "cat-102b" }
+      : match.id === "match-103"
+        ? { upper: "cat-103d", cat3: "cat-103d", cat2: "cat-103c", cat1: "cat-103b" }
+        : { upper: "cat-104d", cat3: "cat-104d", cat2: "cat-104c", cat1: "cat-104b" };
 
   const formatDate = (dateStr: string) =>
     new Date(dateStr).toLocaleDateString("en-US", {
       weekday: "long", month: "long", day: "numeric", year: "numeric",
     });
 
-  const handleSeatClick = (catId: string) => {
+  const handleSeatClick = (catId: string, listing?: { price: number; section?: string; row?: string; tickets?: string; badge?: string; rating?: number; ratingLabel?: string }) => {
     const cat = match.ticketCategories.find((c) => c.id === catId);
     if (cat) {
-      addItem(match, cat, 1);
+      addItem(match, cat, 1, listing?.price ?? cat.price, listing);
       router.push("/checkout");
     }
   };
@@ -165,7 +173,7 @@ export default function MatchDetailPage() {
                             {listings.map((listing, idx) => (
                               <button
                                 key={`${listing.section}-${listing.row}-${idx}`}
-                                onClick={() => handleSeatClick(seatCategoryMap[catKey])}
+                                onClick={() => handleSeatClick(seatCategoryMap[catKey], listing)}
                                 className="bg-white rounded-xl border border-gray-200 p-4 hover:border-primary-300 hover:shadow-md transition-all text-left group"
                               >
                                 <div className="flex items-start justify-between gap-3">
