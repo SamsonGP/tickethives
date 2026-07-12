@@ -1,44 +1,6 @@
 import { Match } from "@/types";
 
 export const matches: Match[] = [
-  // ==================== QUARTER-FINALS ====================
-  {
-    id: "match-99",
-    matchNumber: 99,
-    stage: "Quarter-Final",
-    teamA: { name: "Norway", code: "NOR", flag: "🇳🇴" },
-    teamB: { name: "England", code: "ENG", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
-    venue: { name: "Hard Rock Stadium", city: "Miami, FL", country: "USA", capacity: 65326 },
-    date: "2026-07-11",
-    time: "17:00",
-    image: "/images/stadium-3.jpg",
-    featured: true,
-    sellingFast: true,
-    ticketCategories: [
-      { id: "cat-99a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 5200, available: 12, section: "VIP Level" },
-      { id: "cat-99b", name: "Category 1", description: "Premium seats with excellent pitch views", price: 2350, available: 85, section: "Lower Tier" },
-      { id: "cat-99c", name: "Category 2", description: "Great views of the action from mid-tier seating", price: 1847, available: 140, section: "Mid Tier" },
-      { id: "cat-99d", name: "Category 3", description: "Affordable seats with electric atmosphere", price: 780, available: 210, section: "Upper Tier" },
-    ],
-  },
-  {
-    id: "match-100",
-    matchNumber: 100,
-    stage: "Quarter-Final",
-    teamA: { name: "Argentina", code: "ARG", flag: "🇦🇷" },
-    teamB: { name: "Switzerland", code: "SUI", flag: "🇨🇭" },
-    venue: { name: "GEHA Field at Arrowhead Stadium", city: "Kansas City, MO", country: "USA", capacity: 76416 },
-    date: "2026-07-11",
-    time: "20:00",
-    image: "/images/stadium-4.jpg",
-    featured: true,
-    ticketCategories: [
-      { id: "cat-100a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 4800, available: 22, section: "VIP Level" },
-      { id: "cat-100b", name: "Category 1", description: "Premium seats with excellent pitch views", price: 2100, available: 130, section: "Lower Tier" },
-      { id: "cat-100c", name: "Category 2", description: "Great views of the action from mid-tier seating", price: 1539, available: 270, section: "Mid Tier" },
-      { id: "cat-100d", name: "Category 3", description: "Affordable seats with electric atmosphere", price: 680, available: 520, section: "Upper Tier" },
-    ],
-  },
   // ==================== SEMI-FINALS ====================
   {
     id: "match-101",
@@ -62,8 +24,8 @@ export const matches: Match[] = [
     id: "match-102",
     matchNumber: 102,
     stage: "Semi-Final",
-    teamA: { name: "Winner QF3", code: "QF3", flag: "🏳️" },
-    teamB: { name: "Winner QF4", code: "QF4", flag: "🏳️" },
+    teamA: { name: "England", code: "ENG", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+    teamB: { name: "Argentina", code: "ARG", flag: "🇦🇷" },
     venue: { name: "Mercedes-Benz Stadium", city: "Atlanta, GA", country: "USA", capacity: 71000 },
     date: "2026-07-15",
     time: "15:00",
@@ -129,4 +91,4 @@ export function getMatchesByStage(stage: string): Match[] {
   return matches.filter((m) => m.stage === stage);
 }
 
-export const stages = ["All", "Quarter-Final", "Semi-Final", "Third Place Play-Off", "Final"];
+export const stages = ["All", "Semi-Final", "Third Place Play-Off", "Final"];
