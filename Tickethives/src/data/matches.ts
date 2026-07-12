@@ -11,7 +11,7 @@ export const matches: Match[] = [
     venue: { name: "AT&T Stadium", city: "Arlington, TX", country: "USA", capacity: 80000 },
     date: "2026-07-14",
     time: "14:00",
-    image: "/images/stadium-5.jpg",
+    image: "/stadium/france-vs-spain.png",
     featured: true,
     ticketCategories: [
       { id: "cat-101a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 6500, available: 40, section: "VIP Level" },
@@ -29,7 +29,7 @@ export const matches: Match[] = [
     venue: { name: "Mercedes-Benz Stadium", city: "Atlanta, GA", country: "USA", capacity: 71000 },
     date: "2026-07-15",
     time: "15:00",
-    image: "/images/stadium-6.jpg",
+    image: "/stadium/Argentina.png",
     featured: true,
     ticketCategories: [
       { id: "cat-102a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 6500, available: 38, section: "VIP Level" },
@@ -48,7 +48,7 @@ export const matches: Match[] = [
     venue: { name: "Hard Rock Stadium", city: "Miami, FL", country: "USA", capacity: 65326 },
     date: "2026-07-18",
     time: "22:00",
-    image: "/images/stadium-7.jpg",
+    image: "/stadium/3rdplace.png",
     featured: true,
     ticketCategories: [
       { id: "cat-103a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 2600, available: 55, section: "VIP Level" },
@@ -67,7 +67,7 @@ export const matches: Match[] = [
     venue: { name: "MetLife Stadium", city: "East Rutherford, NJ", country: "USA", capacity: 82500 },
     date: "2026-07-19",
     time: "20:00",
-    image: "/images/stadium-8.jpg",
+    image: "/stadium/final.png",
     featured: true,
     ticketCategories: [
       { id: "cat-104a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 8500, available: 25, section: "VIP Level" },
