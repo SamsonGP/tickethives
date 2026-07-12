@@ -40,6 +40,14 @@ export interface CartItem {
   match: Match;
   category: TicketCategory;
   quantity: number;
+  price: number;
+  itemKey: string;
+  seatSection?: string;
+  seatRow?: string;
+  seatTickets?: string;
+  seatBadge?: string;
+  seatRating?: number;
+  seatRatingLabel?: string;
 }
 
 export interface SeatSelection {
