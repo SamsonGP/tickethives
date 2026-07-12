@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react";
 import { Match } from "@/types";
 
@@ -57,6 +58,18 @@ export default function MatchCard({ match, variant = "default" }: MatchCardProps
                 Match #{match.matchNumber}
               </span>
             </div>
+
+            {match.image && (
+              <div className="mb-5 overflow-hidden rounded-xl border border-primary-700/30 bg-primary-950/40">
+                <Image
+                  src={match.image}
+                  alt={`${match.teamA.name} vs ${match.teamB.name} stadium preview`}
+                  width={800}
+                  height={450}
+                  className="h-20 w-full object-cover sm:h-24"
+                />
+              </div>
+            )}
 
             {/* Teams */}
             <div className="flex items-center justify-between mb-6">
@@ -158,6 +171,18 @@ export default function MatchCard({ match, variant = "default" }: MatchCardProps
 
         {/* Content */}
         <div className="p-5">
+          {match.image && (
+            <div className="mb-4 overflow-hidden rounded-xl border border-gray-100 bg-gray-50">
+              <Image
+                src={match.image}
+                alt={`${match.teamA.name} vs ${match.teamB.name} stadium preview`}
+                width={800}
+                height={450}
+                className="h-20 w-full object-cover sm:h-24"
+              />
+            </div>
+          )}
+
           {/* Teams */}
           <div className="flex items-center justify-between mb-5">
             <div className="flex-1 text-center">
