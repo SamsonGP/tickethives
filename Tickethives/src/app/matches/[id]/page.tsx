@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft, Calendar, MapPin, Clock, Users,
@@ -96,6 +97,18 @@ export default function MatchDetailPage() {
             </span>
             <span className="text-primary-400 text-xs font-medium">Match #{match.matchNumber}</span>
           </div>
+
+          {match.image && (
+            <div className="mb-8 overflow-hidden rounded-2xl border border-white/15 bg-white/10 shadow-lg">
+              <Image
+                src={match.image}
+                alt={`${match.teamA.name} vs ${match.teamB.name} stadium preview`}
+                width={1200}
+                height={600}
+                className="h-28 w-full object-cover sm:h-40 lg:h-48"
+              />
+            </div>
+          )}
 
           {/* Teams display */}
           <div className="flex items-center justify-center gap-6 lg:gap-16 mb-8">
