@@ -302,6 +302,12 @@ export default function CheckoutPage() {
                         <p className="text-xs text-gray-400">
                           {item.category.name} x{item.quantity}
                         </p>
+                        {(item.seatSection || item.seatRow) && (
+                          <p className="text-[11px] text-gray-500 mt-1">
+                            {item.seatSection ? `Section ${item.seatSection}` : "Section TBD"}
+                            {item.seatRow ? ` • Row ${item.seatRow}` : ""}
+                          </p>
+                        )}
                       </div>
                       <p className="font-semibold text-gray-900 whitespace-nowrap">
                         ${(item.price * item.quantity).toLocaleString()}
