@@ -3,6 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import {
   ArrowLeft, Calendar, MapPin, Clock, Users,
   Shield, Check, Star, Ticket,
@@ -11,11 +12,22 @@ import { getMatchById } from "@/data/matches";
 import { useCart } from "@/context/CartContext";
 import { englandVsArgentinaSeats, finalMatchSeats, franceVsSpainSeats, seatCategoryLabels, thirdPlacePlayoffSeats } from "@/data/seatListings";
 
+type SeatListingSelection = {
+  price: number;
+  section?: string;
+  row?: string;
+  tickets?: string;
+  badge?: string;
+  rating?: number;
+  ratingLabel?: string;
+};
+
 export default function MatchDetailPage() {
   const params = useParams();
   const router = useRouter();
   const match = getMatchById(params.id as string);
   const { addItem } = useCart();
+  const [pendingSeat, setPendingSeat] = useState<{ catId: string; listing?: SeatListingSelection } | null>(null);
 
   if (!match) {
     return (
@@ -55,11 +67,21 @@ export default function MatchDetailPage() {
       weekday: "long", month: "long", day: "numeric", year: "numeric",
     });
 
-  const handleSeatClick = (catId: string, listing?: { price: number; section?: string; row?: string; tickets?: string; badge?: string; rating?: number; ratingLabel?: string }) => {
-    const cat = match.ticketCategories.find((c) => c.id === catId);
+  const handleSeatClick = (catId: string, listing?: SeatListingSelection) => {
+    setPendingSeat({ catId, listing });
+  };
+
+  const confirmSeatAction = (action: "cart" | "checkout") => {
+    if (!pendingSeat) return;
+
+    const cat = match.ticketCategories.find((c) => c.id === pendingSeat.catId);
     if (cat) {
-      addItem(match, cat, 1, listing?.price ?? cat.price, listing);
-      router.push("/checkout");
+      addItem(match, cat, 1, pendingSeat.listing?.price ?? cat.price, pendingSeat.listing);
+      setPendingSeat(null);
+
+      if (action === "checkout") {
+        router.push("/checkout");
+      }
     }
   };
 
@@ -155,6 +177,69 @@ export default function MatchDetailPage() {
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        {pendingSeat && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-3 py-4 sm:px-4 sm:py-6">
+            <div className="w-full max-w-sm rounded-2xl bg-white p-4 shadow-2xl sm:max-w-md sm:p-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-wide text-primary-600">Seat selection</p>
+                  <h3 className="mt-1 text-xl font-bold text-gray-900">Add this listing?</h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPendingSeat(null)}
+                  className="text-sm font-medium text-gray-400 hover:text-gray-600"
+                >
+                  Close
+                </button>
+              </div>
+
+              <div className="mt-4 rounded-xl border border-gray-200 bg-gray-50 p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="font-semibold text-gray-900">
+                      {pendingSeat.listing?.section ?? "Selected seat"}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {pendingSeat.listing?.row ? `Row ${pendingSeat.listing.row}` : "Premium match listing"}
+                      {pendingSeat.listing?.tickets ? ` • ${pendingSeat.listing.tickets} ticket${pendingSeat.listing.tickets !== "1" ? "s" : ""}` : ""}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-lg font-bold text-primary-700">
+                      ${((pendingSeat.listing?.price ?? 0)).toLocaleString()} ea
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-3">
+                <button
+                  type="button"
+                  onClick={() => confirmSeatAction("cart")}
+                  className="w-full rounded-xl bg-primary-600 px-4 py-3 font-semibold text-white transition hover:bg-primary-700"
+                >
+                  Add to Cart
+                </button>
+                <button
+                  type="button"
+                  onClick={() => confirmSeatAction("checkout")}
+                  className="w-full rounded-xl border border-primary-200 bg-primary-50 px-4 py-3 font-semibold text-primary-700 transition hover:bg-primary-100"
+                >
+                  Proceed to Checkout
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPendingSeat(null)}
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 font-semibold text-gray-600 transition hover:bg-gray-50"
+                >
+                  Continue Shopping
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Seat listings */}
           <div className="lg:col-span-2">
