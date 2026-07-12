@@ -1,0 +1,195 @@
+export interface SeatListing {
+  section: string;
+  row: string;
+  tickets: string;
+  rating?: number;
+  ratingLabel?: string;
+  badge?: string;
+  originalPrice: number;
+  price: number;
+  category: "upper" | "cat3" | "cat2" | "cat1";
+}
+
+// Discount rules applied:
+// $0–$500 → -$100
+// $501–$1,000 → -$200
+// $1,001–$2,000 → -$300
+// $2,001–$4,000 → -$600
+// $4,001–$10,000 → -$600
+
+const getDiscountedPrice = (originalPrice: number) => {
+  if (originalPrice <= 500) return originalPrice - 100;
+  if (originalPrice <= 1000) return originalPrice - 200;
+  if (originalPrice <= 2000) return originalPrice - 300;
+  return originalPrice - 600;
+};
+
+export const franceVsSpainSeats: SeatListing[] = [
+  // ==================== UPPER TIER (unlabeled) ====================
+  { section: "422", row: "12", tickets: "1–3", rating: 8.9, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1043, price: 743, category: "upper" },
+  { section: "420", row: "21", tickets: "1", rating: 8.3, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1043, price: 743, category: "upper" },
+  { section: "423", row: "16", tickets: "1", rating: 8.3, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1062, price: 762, category: "upper" },
+  { section: "Block 450", row: "19", tickets: "1–4", rating: 8.1, ratingLabel: "Great", originalPrice: 1066, price: 766, category: "upper" },
+  { section: "Block 421", row: "19", tickets: "1–4", rating: 8.5, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1082, price: 782, category: "upper" },
+  { section: "425", row: "4", tickets: "1", rating: 7.5, ratingLabel: "Very Good", badge: "Lowest Price in Section", originalPrice: 1128, price: 828, category: "upper" },
+  { section: "421", row: "14", tickets: "1–4", rating: 8.1, ratingLabel: "Great", originalPrice: 1173, price: 873, category: "upper" },
+  { section: "452", row: "21", tickets: "1–4", rating: 7.2, ratingLabel: "Very Good", badge: "Lowest Price in Section", originalPrice: 1186, price: 886, category: "upper" },
+  { section: "431", row: "12", tickets: "1–7", rating: 8.6, ratingLabel: "Great", originalPrice: 1234, price: 934, category: "upper" },
+  { section: "430", row: "3", tickets: "1–4", rating: 8.4, ratingLabel: "Great", originalPrice: 1275, price: 975, category: "upper" },
+  { section: "429", row: "4", tickets: "1–4", rating: 7.4, ratingLabel: "Very Good", originalPrice: 1275, price: 975, category: "upper" },
+  { section: "Section 426", row: "1", tickets: "1–2", rating: 8.9, ratingLabel: "Great", badge: "Front of Section", originalPrice: 1386, price: 1086, category: "upper" },
+  { section: "Section 430", row: "1", tickets: "1–4", rating: 8.8, ratingLabel: "Great", badge: "Front of Section", originalPrice: 1386, price: 1086, category: "upper" },
+  { section: "Section 459", row: "1", tickets: "1–2", rating: 8.2, ratingLabel: "Great", badge: "Front of Section", originalPrice: 1386, price: 1086, category: "upper" },
+
+  // ==================== CATEGORY 3 ====================
+  { section: "422", row: "19", tickets: "1–4", rating: 7.0, ratingLabel: "Very Good", originalPrice: 1292, price: 992, category: "cat3" },
+  { section: "448", row: "20", tickets: "1–2", rating: 7.3, ratingLabel: "Very Good", badge: "Lowest Price in Section", originalPrice: 1309, price: 1009, category: "cat3" },
+  { section: "446", row: "19", tickets: "1", rating: 7.0, ratingLabel: "Very Good", badge: "Lowest Price in Section", originalPrice: 1340, price: 1040, category: "cat3" },
+  { section: "427", row: "4", tickets: "1–3", rating: 7.8, ratingLabel: "Very Good", originalPrice: 1347, price: 1047, category: "cat3" },
+  { section: "417", row: "17", tickets: "1–4", rating: 7.1, ratingLabel: "Very Good", badge: "Lowest Price in Section", originalPrice: 1364, price: 1064, category: "cat3" },
+  { section: "405", row: "22", tickets: "1–4", rating: 7.2, ratingLabel: "Very Good", originalPrice: 1384, price: 1084, category: "cat3" },
+  { section: "403", row: "15", tickets: "1–4", rating: 6.7, ratingLabel: "Good", originalPrice: 1384, price: 1084, category: "cat3" },
+  { section: "429", row: "3", tickets: "1–8", rating: 8.4, ratingLabel: "Great", originalPrice: 1430, price: 1130, category: "cat3" },
+  { section: "439", row: "11", tickets: "1–2", rating: 8.3, ratingLabel: "Great", originalPrice: 1445, price: 1145, category: "cat3" },
+
+  // ==================== CATEGORY 2 ====================
+  { section: "451", row: "3", tickets: "1–2", rating: 6.3, ratingLabel: "Good", originalPrice: 1473, price: 1173, category: "cat2" },
+  { section: "408", row: "11", tickets: "1–8", rating: 7.7, ratingLabel: "Very Good", originalPrice: 1495, price: 1195, category: "cat2" },
+  { section: "Section 459", row: "1", tickets: "1–5", rating: 8.0, ratingLabel: "Great", badge: "Front of Section", originalPrice: 1512, price: 1212, category: "cat2" },
+  { section: "414", row: "2", tickets: "1", rating: 9.0, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 1530, price: 1230, category: "cat2" },
+  { section: "453", row: "1", tickets: "1–2", badge: "Front of Section", originalPrice: 1530, price: 1230, category: "cat2" },
+  { section: "416", row: "19", tickets: "1–4", rating: 6.4, ratingLabel: "Good", originalPrice: 1538, price: 1238, category: "cat2" },
+  { section: "445", row: "16", tickets: "1–9", rating: 7.2, ratingLabel: "Very Good", originalPrice: 1606, price: 1306, category: "cat2" },
+  { section: "416", row: "9", tickets: "1–3", rating: 7.7, ratingLabel: "Very Good", originalPrice: 1608, price: 1308, category: "cat2" },
+  { section: "458", row: "1", tickets: "1–3", rating: 7.1, ratingLabel: "Very Good", badge: "Front of Section", originalPrice: 1612, price: 1312, category: "cat2" },
+  { section: "327", row: "17", tickets: "1–4", rating: 8.3, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1640, price: 1340, category: "cat2" },
+  { section: "441", row: "3", tickets: "1", rating: 8.3, ratingLabel: "Great", badge: "Last Ticket in Section", originalPrice: 1676, price: 1376, category: "cat2" },
+
+  // ==================== CATEGORY 1 ====================
+  { section: "250", row: "6", tickets: "1–4", rating: 9.3, ratingLabel: "Excellent", originalPrice: 1716, price: 1416, category: "cat1" },
+  { section: "243", row: "9", tickets: "1–4", rating: 9.2, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 1733, price: 1433, category: "cat1" },
+  { section: "317", row: "17", tickets: "1–4", rating: 9.1, ratingLabel: "Excellent", originalPrice: 1735, price: 1435, category: "cat1" },
+  { section: "250", row: "4", tickets: "1–4", rating: 9.5, ratingLabel: "Excellent", originalPrice: 1758, price: 1458, category: "cat1" },
+  { section: "218", row: "5", tickets: "1", rating: 9.9, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 1766, price: 1466, category: "cat1" },
+  { section: "220", row: "3", tickets: "1", rating: 9.9, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 1766, price: 1466, category: "cat1" },
+  { section: "226", row: "7", tickets: "1–4", rating: 9.5, ratingLabel: "Excellent", originalPrice: 1842, price: 1542, category: "cat1" },
+  { section: "243", row: "8", tickets: "1–3", rating: 8.7, ratingLabel: "Great", originalPrice: 1949, price: 1649, category: "cat1" },
+  { section: "250", row: "3", tickets: "1–4", rating: 9.2, ratingLabel: "Excellent", originalPrice: 1870, price: 1570, category: "cat1" },
+  { section: "327", row: "1", tickets: "1–3", rating: 9.0, ratingLabel: "Excellent", badge: "Front of Section", originalPrice: 1935, price: 1635, category: "cat1" },
+  { section: "219", row: "3", tickets: "1–3", rating: 9.5, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 2037, price: 1437, category: "cat1" },
+  { section: "C313", row: "15", tickets: "1–4", rating: 9.7, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 2061, price: 1461, category: "cat1" },
+  { section: "148", row: "18", tickets: "1–4", rating: 9.6, ratingLabel: "Excellent", originalPrice: 2031, price: 1431, category: "cat1" },
+  { section: "149", row: "14", tickets: "1–3", rating: 10.0, ratingLabel: "Fantastic", originalPrice: 2179, price: 1579, category: "cat1" },
+  { section: "217", row: "1", tickets: "1–4", rating: 9.3, ratingLabel: "Excellent", badge: "Front of Section", originalPrice: 2303, price: 1703, category: "cat1" },
+  { section: "149", row: "11", tickets: "1–3", rating: 10.0, ratingLabel: "Fantastic", originalPrice: 2312, price: 1712, category: "cat1" },
+];
+
+export const englandVsArgentinaSeats: SeatListing[] = [
+  { section: "328", row: "16", tickets: "1–3", rating: 8.6, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 2105, price: getDiscountedPrice(2105), category: "upper" },
+  { section: "332", row: "11", tickets: "1–4", rating: 8.7, ratingLabel: "Great", originalPrice: 2220, price: getDiscountedPrice(2220), category: "upper" },
+  { section: "317", row: "22", tickets: "1–4", rating: 7.9, ratingLabel: "Very Good", originalPrice: 2304, price: getDiscountedPrice(2304), category: "upper" },
+  { section: "317", row: "24", tickets: "1–4", rating: 7.6, ratingLabel: "Very Good", originalPrice: 2304, price: getDiscountedPrice(2304), category: "upper" },
+  { section: "336", row: "20", tickets: "1–4", rating: 8.6, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 2335, price: getDiscountedPrice(2335), category: "upper" },
+  { section: "317", row: "20", tickets: "1–3", rating: 7.8, ratingLabel: "Very Good", originalPrice: 2357, price: getDiscountedPrice(2357), category: "upper" },
+  { section: "319", row: "19", tickets: "1–3", rating: 7.4, ratingLabel: "Very Good", originalPrice: 2361, price: getDiscountedPrice(2361), category: "upper" },
+  { section: "345", row: "11", tickets: "1–4", rating: 8.2, ratingLabel: "Great", originalPrice: 2448, price: getDiscountedPrice(2448), category: "upper" },
+  { section: "317", row: "21", tickets: "1–4", rating: 7.1, ratingLabel: "Very Good", originalPrice: 2483, price: getDiscountedPrice(2483), category: "upper" },
+  { section: "332", row: "10", tickets: "1–4", rating: 7.7, ratingLabel: "Very Good", originalPrice: 2484, price: getDiscountedPrice(2484), category: "upper" },
+  { section: "321", row: "23", tickets: "1–4", rating: 7.2, ratingLabel: "Very Good", originalPrice: 2487, price: getDiscountedPrice(2487), category: "upper" },
+  { section: "303", row: "20", tickets: "1–2", rating: 6.8, ratingLabel: "Good", originalPrice: 2493, price: getDiscountedPrice(2493), category: "upper" },
+  { section: "332", row: "10", tickets: "1–3", rating: 7.5, ratingLabel: "Very Good", originalPrice: 2536, price: getDiscountedPrice(2536), category: "upper" },
+  { section: "Upper 332", row: "9", tickets: "1–4", rating: 7.4, ratingLabel: "Very Good", originalPrice: 2556, price: getDiscountedPrice(2556), category: "upper" },
+  { section: "Category 2", row: "—", tickets: "1–4", rating: 9.5, ratingLabel: "Excellent", badge: "from", originalPrice: 2570, price: getDiscountedPrice(2570), category: "cat2" },
+  { section: "344", row: "22", tickets: "1", rating: 6.4, ratingLabel: "Good", badge: "Lowest Price in Section", originalPrice: 2570, price: getDiscountedPrice(2570), category: "upper" },
+  { section: "350", row: "13", tickets: "1–4", rating: 6.8, ratingLabel: "Good", originalPrice: 2573, price: getDiscountedPrice(2573), category: "upper" },
+  { section: "345", row: "22", tickets: "1–4", rating: 6.5, ratingLabel: "Good", originalPrice: 2573, price: getDiscountedPrice(2573), category: "upper" },
+  { section: "350", row: "17", tickets: "1–4", rating: 6.4, ratingLabel: "Good", originalPrice: 2573, price: getDiscountedPrice(2573), category: "upper" },
+  { section: "314", row: "32", tickets: "1–4", rating: 7.2, ratingLabel: "Very Good", badge: "Lowest Price in Section", originalPrice: 2598, price: getDiscountedPrice(2598), category: "upper" },
+  { section: "302", row: "7", tickets: "1–3", rating: 7.4, ratingLabel: "Very Good", badge: "Lowest Price in Section", originalPrice: 2609, price: getDiscountedPrice(2609), category: "upper" },
+  { section: "317", row: "18", tickets: "1–3", rating: 6.9, ratingLabel: "Good", originalPrice: 2620, price: getDiscountedPrice(2620), category: "upper" },
+  { section: "302", row: "17", tickets: "1–4", rating: 6.9, ratingLabel: "Good", originalPrice: 2621, price: getDiscountedPrice(2621), category: "upper" },
+  { section: "Upper 303", row: "22", tickets: "1–4", rating: 6.2, ratingLabel: "Good", badge: "Lowest Price in Section", originalPrice: 2641, price: getDiscountedPrice(2641), category: "upper" },
+  { section: "Category 3", row: "—", tickets: "1–4", rating: 6.2, ratingLabel: "Good", badge: "from", originalPrice: 2659, price: getDiscountedPrice(2659), category: "cat3" },
+  { section: "306", row: "18", tickets: "1–2", rating: 6.9, ratingLabel: "Good", originalPrice: 2686, price: getDiscountedPrice(2686), category: "upper" },
+  { section: "227", row: "11", tickets: "1", rating: 9.8, ratingLabel: "Excellent", originalPrice: 2716, price: getDiscountedPrice(2716), category: "upper" },
+  { section: "227", row: "9", tickets: "1", rating: 9.8, ratingLabel: "Excellent", originalPrice: 2716, price: getDiscountedPrice(2716), category: "upper" },
+  { section: "303", row: "15", tickets: "1", rating: 6.2, ratingLabel: "Good", originalPrice: 2734, price: getDiscountedPrice(2734), category: "upper" },
+  { section: "230", row: "11", tickets: "1", rating: 9.3, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 2744, price: getDiscountedPrice(2744), category: "upper" },
+  { section: "329", row: "17", tickets: "1", originalPrice: 2767, price: getDiscountedPrice(2767), category: "upper" },
+  { section: "348", row: "23", tickets: "1–4", originalPrice: 2782, price: getDiscountedPrice(2782), category: "upper" },
+  { section: "302", row: "15", tickets: "1–4", rating: 6.5, ratingLabel: "Good", originalPrice: 2782, price: getDiscountedPrice(2782), category: "upper" },
+  { section: "332", row: "8", tickets: "1–4", rating: 6.6, ratingLabel: "Good", originalPrice: 2797, price: getDiscountedPrice(2797), category: "upper" },
+  { section: "321", row: "15", tickets: "1–5", rating: 7.2, ratingLabel: "Very Good", originalPrice: 2803, price: getDiscountedPrice(2803), category: "upper" },
+  { section: "323", row: "18", tickets: "1–3", rating: 6.3, ratingLabel: "Good", originalPrice: 2810, price: getDiscountedPrice(2810), category: "upper" },
+  { section: "320", row: "20", tickets: "1–3", rating: 6.0, ratingLabel: "Good", originalPrice: 2810, price: getDiscountedPrice(2810), category: "upper" },
+  { section: "342", row: "13", tickets: "1–4", rating: 7.3, ratingLabel: "Very Good", originalPrice: 2812, price: getDiscountedPrice(2812), category: "upper" },
+  { section: "342", row: "15", tickets: "1–4", rating: 7.2, ratingLabel: "Very Good", originalPrice: 2812, price: getDiscountedPrice(2812), category: "upper" },
+  { section: "Block 342", row: "16", tickets: "1–4", rating: 7.0, ratingLabel: "Very Good", badge: "Last Ticket in Section", originalPrice: 2820, price: getDiscountedPrice(2820), category: "upper" },
+  { section: "306", row: "10", tickets: "1–4", rating: 7.1, ratingLabel: "Very Good", originalPrice: 2826, price: getDiscountedPrice(2826), category: "upper" },
+  { section: "350", row: "14", tickets: "1–4", originalPrice: 2859, price: getDiscountedPrice(2859), category: "upper" },
+  { section: "317", row: "23", tickets: "1–4", originalPrice: 2859, price: getDiscountedPrice(2859), category: "upper" },
+  { section: "314", row: "20", tickets: "1–4", rating: 7.4, ratingLabel: "Very Good", originalPrice: 2870, price: getDiscountedPrice(2870), category: "upper" },
+  { section: "306", row: "7", tickets: "1", rating: 6.8, ratingLabel: "Good", originalPrice: 2876, price: getDiscountedPrice(2876), category: "upper" },
+  { section: "319", row: "22", tickets: "1–3", originalPrice: 2876, price: getDiscountedPrice(2876), category: "upper" },
+  { section: "337", row: "12", tickets: "1–4", rating: 7.8, ratingLabel: "Very Good", originalPrice: 2894, price: getDiscountedPrice(2894), category: "upper" },
+  { section: "337", row: "13", tickets: "1–4", rating: 7.5, ratingLabel: "Very Good", originalPrice: 2894, price: getDiscountedPrice(2894), category: "upper" },
+  { section: "343", row: "15", tickets: "1–2", rating: 0, badge: "Lowest Price in Section", originalPrice: 2894, price: getDiscountedPrice(2894), category: "upper" },
+  { section: "333", row: "1A", tickets: "1–2", rating: 6.8, ratingLabel: "Good", badge: "Last Ticket in Section", originalPrice: 2916, price: getDiscountedPrice(2916), category: "upper" },
+  { section: "332", row: "7", tickets: "1–3", rating: 6.3, ratingLabel: "Good", originalPrice: 2922, price: getDiscountedPrice(2922), category: "upper" },
+  { section: "332", row: "7", tickets: "1–4", rating: 6.3, ratingLabel: "Good", originalPrice: 2922, price: getDiscountedPrice(2922), category: "upper" },
+  { section: "307", row: "23", tickets: "1–4", originalPrice: 2932, price: getDiscountedPrice(2932), category: "upper" },
+  { section: "311", row: "30", tickets: "1", rating: 6.8, ratingLabel: "Good", originalPrice: 2935, price: getDiscountedPrice(2935), category: "upper" },
+  { section: "Section 316", row: "4", tickets: "1–4", rating: 7.5, ratingLabel: "Very Good", badge: "Last Ticket in Section", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 329", row: "1", tickets: "1–2", rating: 7.2, ratingLabel: "Very Good", badge: "Front of Section", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 329", row: "5", tickets: "1–4", rating: 6.8, ratingLabel: "Good", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 306", row: "10", tickets: "1–4", rating: 6.7, ratingLabel: "Good", badge: "Lowest Price in Section", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 329", row: "8", tickets: "1–3", rating: 6.5, ratingLabel: "Good", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 306", row: "14", tickets: "1–4", rating: 6.4, ratingLabel: "Good", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 329", row: "9", tickets: "1–3", rating: 6.4, ratingLabel: "Good", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 301", row: "8", tickets: "1–4", rating: 6.3, ratingLabel: "Good", badge: "Lowest Price in Section", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 329", row: "13", tickets: "1–4", rating: 6.0, ratingLabel: "Good", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 320", row: "18", tickets: "1", badge: "Last Ticket in Section", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 349", row: "10", tickets: "1–4", badge: "Last Ticket in Section", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 307", row: "25", tickets: "1", badge: "Last Ticket in Section", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 301", row: "18", tickets: "1", originalPrice: 2948, price: getDiscountedPrice(2948), category: "upper" },
+  { section: "Section 330", row: "8", tickets: "1–4", rating: 6.5, ratingLabel: "Good", badge: "Last Ticket in Section", originalPrice: 2974, price: getDiscountedPrice(2974), category: "upper" },
+  { section: "Section 310", row: "28", tickets: "1–4", rating: 6.2, ratingLabel: "Good", badge: "Last Ticket in Section", originalPrice: 2974, price: getDiscountedPrice(2974), category: "upper" },
+  { section: "320", row: "7", tickets: "1–4", rating: 6.3, ratingLabel: "Good", originalPrice: 2994, price: getDiscountedPrice(2994), category: "upper" },
+  { section: "330", row: "17", tickets: "1–4", originalPrice: 2994, price: getDiscountedPrice(2994), category: "upper" },
+  { section: "325", row: "2", tickets: "1–4", rating: 7.2, ratingLabel: "Very Good", originalPrice: 3008, price: getDiscountedPrice(3008), category: "upper" },
+  { section: "311", row: "20", tickets: "1–3", rating: 7.4, ratingLabel: "Very Good", originalPrice: 3030, price: getDiscountedPrice(3030), category: "upper" },
+  { section: "313", row: "19", tickets: "1–3", rating: 7.2, ratingLabel: "Very Good", originalPrice: 3030, price: getDiscountedPrice(3030), category: "upper" },
+  { section: "313", row: "17", tickets: "1–3", rating: 7.4, ratingLabel: "Very Good", originalPrice: 3032, price: getDiscountedPrice(3032), category: "upper" },
+  { section: "318", row: "22", tickets: "1–4", originalPrice: 3032, price: getDiscountedPrice(3032), category: "upper" },
+  { section: "246", row: "3", tickets: "1–4", rating: 9.4, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 3059, price: getDiscountedPrice(3059), category: "upper" },
+  { section: "330", row: "19", tickets: "1–4", originalPrice: 3062, price: getDiscountedPrice(3062), category: "upper" },
+  { section: "Category 1", row: "—", tickets: "1–4", badge: "from", originalPrice: 3087, price: getDiscountedPrice(3087), category: "cat1" },
+  { section: "317", row: "24", tickets: "1–4", originalPrice: 3103, price: getDiscountedPrice(3103), category: "upper" },
+  { section: "117", row: "42", tickets: "1–4", rating: 9.7, ratingLabel: "Excellent", originalPrice: 3104, price: getDiscountedPrice(3104), category: "upper" },
+  { section: "227", row: "5", tickets: "1–4", rating: 9.8, ratingLabel: "Excellent", originalPrice: 3109, price: getDiscountedPrice(3109), category: "upper" },
+  { section: "349", row: "20", tickets: "1–3", originalPrice: 3130, price: getDiscountedPrice(3130), category: "upper" },
+  { section: "121", row: "38", tickets: "1–4", rating: 10.0, ratingLabel: "Fantastic", originalPrice: 3133, price: getDiscountedPrice(3133), category: "upper" },
+  { section: "117", row: "37", tickets: "1–4", rating: 9.7, ratingLabel: "Excellent", originalPrice: 3141, price: getDiscountedPrice(3141), category: "upper" },
+  { section: "135", row: "37", tickets: "1–4", rating: 7.6, ratingLabel: "Very Good", badge: "Lowest Price in Section", originalPrice: 3143, price: getDiscountedPrice(3143), category: "upper" },
+  { section: "304", row: "3", tickets: "1–4", rating: 6.2, ratingLabel: "Good", originalPrice: 3145, price: getDiscountedPrice(3145), category: "upper" },
+  { section: "328", row: "7", tickets: "1", originalPrice: 3152, price: getDiscountedPrice(3152), category: "upper" },
+  { section: "121", row: "37", tickets: "1–4", rating: 10.0, ratingLabel: "Fantastic", originalPrice: 3153, price: getDiscountedPrice(3153), category: "upper" },
+  { section: "136", row: "36", tickets: "1–3", rating: 8.1, ratingLabel: "Great", originalPrice: 3161, price: getDiscountedPrice(3161), category: "upper" },
+  { section: "135", row: "36", tickets: "1–4", rating: 7.7, ratingLabel: "Very Good", originalPrice: 3171, price: getDiscountedPrice(3171), category: "upper" },
+  { section: "312", row: "30", tickets: "1–4", rating: 6.1, ratingLabel: "Good", originalPrice: 3173, price: getDiscountedPrice(3173), category: "upper" },
+  { section: "135", row: "35", tickets: "1–4", rating: 7.9, ratingLabel: "Very Good", originalPrice: 3184, price: getDiscountedPrice(3184), category: "upper" },
+  { section: "117", row: "35", tickets: "1–4", rating: 9.7, ratingLabel: "Excellent", originalPrice: 3197, price: getDiscountedPrice(3197), category: "upper" },
+  { section: "344", row: "12", tickets: "1–8", rating: 6.0, ratingLabel: "Good", originalPrice: 3198, price: getDiscountedPrice(3198), category: "upper" },
+  { section: "117", row: "34", tickets: "1–4", rating: 9.7, ratingLabel: "Excellent", originalPrice: 3222, price: getDiscountedPrice(3222), category: "upper" },
+  { section: "Upper 303", row: "19", tickets: "1–4", originalPrice: 3242, price: getDiscountedPrice(3242), category: "upper" },
+  { section: "135", row: "33", tickets: "1–4", rating: 8.1, ratingLabel: "Great", originalPrice: 3246, price: getDiscountedPrice(3246), category: "upper" },
+  { section: "308", row: "18", tickets: "1–4", originalPrice: 3249, price: getDiscountedPrice(3249), category: "upper" },
+  { section: "246", row: "8", tickets: "1–2", rating: 7.9, ratingLabel: "Very Good", originalPrice: 3259, price: getDiscountedPrice(3259), category: "upper" },
+];
+
+export const seatCategoryLabels: Record<string, string> = {
+  upper: "Upper Tier",
+  cat3: "Category 3",
+  cat2: "Category 2",
+  cat1: "Category 1",
+};
