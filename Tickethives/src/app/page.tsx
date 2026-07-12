@@ -56,8 +56,8 @@ export default function HomePage() {
               </h1>
 
               <p className="text-base sm:text-lg lg:text-xl text-primary-100 max-w-2xl mx-auto lg:mx-0 mb-8 sm:mb-10 leading-relaxed animate-slide-up" style={{ animationDelay: "0.2s" }}>
-                The tournament is reaching its climax. 8 teams remain. Secure your seat for the 
-                Quarter-Finals, Semi-Finals, and the Grand Final before tickets sell out.
+                The tournament is reaching its climax. 4 teams remain. Secure your seat for the 
+                Semi-Finals and the Grand Final before tickets sell out.
               </p>
 
               {/* CTA Buttons */}
@@ -81,9 +81,9 @@ export default function HomePage() {
               {/* Stats */}
               <div className="flex flex-wrap justify-center lg:justify-start gap-6 sm:gap-8 lg:gap-12 animate-slide-up" style={{ animationDelay: "0.4s" }}>
                 {[
-                  { value: "6", label: "Matches Left" },
-                  { value: "6", label: "Teams Remain" },
-                  { value: "4", label: "Rounds to Go" },
+                  { value: "4", label: "Matches Left" },
+                  { value: "4", label: "Teams Remain" },
+                  { value: "3", label: "Rounds to Go" },
                   { value: "1", label: "Champion" },
                 ].map((stat) => (
                   <div key={stat.label}>
