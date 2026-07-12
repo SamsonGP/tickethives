@@ -1,24 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-  ArrowLeft, Calendar, MapPin, Clock, Users, Minus, Plus,
-  ShoppingCart, Shield, Check, Star, Ticket,
+  ArrowLeft, Calendar, MapPin, Clock, Users,
+  Shield, Check, Star, Ticket,
 } from "lucide-react";
 import { getMatchById } from "@/data/matches";
 import { useCart } from "@/context/CartContext";
-import { TicketCategory } from "@/types";
+import { englandVsArgentinaSeats, franceVsSpainSeats, seatCategoryLabels } from "@/data/seatListings";
 
 export default function MatchDetailPage() {
   const params = useParams();
+  const router = useRouter();
   const match = getMatchById(params.id as string);
   const { addItem } = useCart();
-
-  const [selectedCategory, setSelectedCategory] = useState<TicketCategory | null>(null);
-  const [quantity, setQuantity] = useState(1);
-  const [addedToCart, setAddedToCart] = useState(false);
 
   if (!match) {
     return (
@@ -36,17 +32,26 @@ export default function MatchDetailPage() {
 
   const lowestPrice = Math.min(...match.ticketCategories.map((c) => c.price));
   const totalAvailable = match.ticketCategories.reduce((s, c) => s + c.available, 0);
+  const seatListings = match.id === "match-101"
+    ? franceVsSpainSeats
+    : match.id === "match-102"
+      ? englandVsArgentinaSeats
+      : [];
+  const seatCategoryMap = match.id === "match-101"
+    ? { upper: "cat-101d", cat3: "cat-101d", cat2: "cat-101c", cat1: "cat-101b" }
+    : { upper: "cat-102d", cat3: "cat-102d", cat2: "cat-102c", cat1: "cat-102b" };
 
   const formatDate = (dateStr: string) =>
     new Date(dateStr).toLocaleDateString("en-US", {
       weekday: "long", month: "long", day: "numeric", year: "numeric",
     });
 
-  const handleAddToCart = () => {
-    if (!selectedCategory) return;
-    addItem(match, selectedCategory, quantity);
-    setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 3000);
+  const handleSeatClick = (catId: string) => {
+    const cat = match.ticketCategories.find((c) => c.id === catId);
+    if (cat) {
+      addItem(match, cat, 1);
+      router.push("/checkout");
+    }
   };
 
   return (
@@ -130,62 +135,84 @@ export default function MatchDetailPage() {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Ticket categories */}
+          {/* Seat listings */}
           <div className="lg:col-span-2">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Select Your Tickets</h3>
 
-            <div className="space-y-4">
-              {match.ticketCategories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => {
-                    setSelectedCategory(cat);
-                    setQuantity(1);
-                  }}
-                  className={`w-full text-left p-6 rounded-2xl border-2 transition-all ${
-                    selectedCategory?.id === cat.id
-                      ? "border-primary-500 bg-primary-50 shadow-lg shadow-primary-500/10"
-                      : "border-gray-200 bg-white hover:border-primary-200 hover:shadow-md"
-                  }`}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h4 className="text-lg font-bold text-gray-900">{cat.name}</h4>
-                        <span className={`px-2.5 py-0.5 text-xs font-semibold rounded-full ${
-                          cat.section === "VIP Level"
-                            ? "bg-yellow-100 text-yellow-700"
-                            : cat.section === "Lower Tier"
-                            ? "bg-blue-100 text-blue-700"
-                            : cat.section === "Mid Tier"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-gray-100 text-gray-600"
-                        }`}>
-                          {cat.section}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-500 mb-3">{cat.description}</p>
-                      <div className="flex items-center gap-4 text-xs text-gray-400">
-                        <span className="flex items-center gap-1">
-                          <Ticket className="w-3.5 h-3.5" />
-                          {cat.available.toLocaleString()} tickets available
-                        </span>
-                      </div>
-                    </div>
-                    <div className="text-right ml-4">
-                      <p className="text-2xl font-bold text-primary-700">${cat.price.toLocaleString()}</p>
-                      <p className="text-xs text-gray-400">per ticket</p>
+            {/* Individual Seat Listings */}
+            {seatListings.length > 0 && (() => {
+              const categoryOrder = ["upper", "cat3", "cat2", "cat1"] as const;
+              return (
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 className="text-2xl font-bold text-gray-900">Available Seat Listings</h3>
+                      <p className="text-sm text-gray-500 mt-1">{seatListings.length} listings available — prices reflect our discounted rate</p>
                     </div>
                   </div>
-                  {selectedCategory?.id === cat.id && (
-                    <div className="mt-4 pt-4 border-t border-primary-200 flex items-center gap-2 text-sm text-primary-700 font-medium">
-                      <Check className="w-4 h-4" />
-                      Selected
-                    </div>
-                  )}
-                </button>
-              ))}
-            </div>
+
+                  <div className="space-y-8">
+                    {categoryOrder.map((catKey) => {
+                      const listings = seatListings.filter((l) => l.category === catKey);
+                      if (listings.length === 0) return null;
+                      return (
+                        <div key={catKey}>
+                          <div className="flex items-center gap-3 mb-4">
+                            <h4 className="text-sm font-bold text-gray-900 uppercase tracking-wider">{seatCategoryLabels[catKey]}</h4>
+                            <span className="text-xs text-gray-400">{listings.length} listings</span>
+                            <div className="flex-1 h-px bg-gray-200" />
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {listings.map((listing, idx) => (
+                              <button
+                                key={`${listing.section}-${listing.row}-${idx}`}
+                                onClick={() => handleSeatClick(seatCategoryMap[catKey])}
+                                className="bg-white rounded-xl border border-gray-200 p-4 hover:border-primary-300 hover:shadow-md transition-all text-left group"
+                              >
+                                <div className="flex items-start justify-between gap-3">
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 mb-1.5">
+                                      <span className="font-bold text-gray-900 text-sm">{listing.section}</span>
+                                      {listing.badge && (
+                                        <span className={`px-1.5 py-0.5 text-[10px] font-semibold rounded-full whitespace-nowrap ${
+                                          listing.badge.includes("Lowest") ? "bg-green-100 text-green-700" :
+                                          listing.badge.includes("Front") ? "bg-blue-100 text-blue-700" :
+                                          listing.badge.includes("Last") ? "bg-orange-100 text-orange-700" :
+                                          listing.badge.includes("Fast") ? "bg-red-100 text-red-700" :
+                                          "bg-gray-100 text-gray-600"
+                                        }`}>
+                                          {listing.badge}
+                                        </span>
+                                      )}
+                                    </div>
+                                    <p className="text-xs text-gray-500">Row {listing.row} | {listing.tickets} ticket{listing.tickets !== "1" ? "s" : ""}</p>
+                                    {listing.rating && (
+                                      <div className="flex items-center gap-1.5 mt-2">
+                                        <span className={`px-1.5 py-0.5 text-[10px] font-bold rounded ${
+                                          listing.rating >= 9.5 ? "bg-emerald-600 text-white" :
+                                          listing.rating >= 8.0 ? "bg-green-500 text-white" :
+                                          listing.rating >= 7.0 ? "bg-yellow-500 text-white" :
+                                          "bg-gray-400 text-white"
+                                        }`}>
+                                          {listing.rating}
+                                        </span>
+                                        <span className="text-[11px] text-gray-500">{listing.ratingLabel}</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                  <div className="text-right shrink-0">
+                                    <p className="text-lg font-bold text-primary-700">${listing.price.toLocaleString()} ea</p>
+                                  </div>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Venue info */}
             <div className="mt-10 bg-white rounded-2xl border border-gray-200 p-6">
@@ -211,117 +238,20 @@ export default function MatchDetailPage() {
             </div>
           </div>
 
-          {/* Order summary sidebar */}
+          {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-bold text-gray-900">Order Summary</h3>
-                  <span className="px-2.5 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">
-                    10% OFF
-                  </span>
+              <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg text-center">
+                <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                  <Ticket className="w-7 h-7 text-primary-400" />
                 </div>
-
-                {selectedCategory ? (
-                  <>
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-500">Match</span>
-                        <span className="font-medium text-gray-900 text-right">{match.teamA.name} vs {match.teamB.name}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-500">Category</span>
-                        <span className="font-medium text-gray-900">{selectedCategory.name}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-500">Section</span>
-                        <span className="font-medium text-gray-900">{selectedCategory.section}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-500">Date</span>
-                        <span className="font-medium text-gray-900">{formatDate(match.date)}</span>
-                      </div>
-                    </div>
-
-                    {/* Quantity selector */}
-                    <div className="mb-6">
-                      <p className="text-sm font-medium text-gray-700 mb-2">Number of Tickets</p>
-                      <div className="flex items-center gap-3">
-                        <button
-                          onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                          className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
-                        >
-                          <Minus className="w-4 h-4" />
-                        </button>
-                        <span className="w-12 text-center text-lg font-bold">{quantity}</span>
-                        <button
-                          onClick={() => setQuantity(Math.min(10, quantity + 1))}
-                          className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
-                        >
-                          <Plus className="w-4 h-4" />
-                        </button>
-                        <span className="text-xs text-gray-400 ml-2">Max 10 per order</span>
-                      </div>
-                    </div>
-
-                    {/* Totals */}
-                    <div className="border-t border-gray-100 pt-4 space-y-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-500">
-                          ${selectedCategory.price.toLocaleString()} x {quantity} ticket{quantity > 1 ? "s" : ""}
-                        </span>
-                        <span className="font-medium">${(selectedCategory.price * quantity).toLocaleString()}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-500">Discount (10%)</span>
-                        <span className="font-medium text-green-600">-${(selectedCategory.price * quantity * 0.10).toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-lg font-bold pt-3 border-t border-gray-100">
-                        <span>Total</span>
-                        <span className="text-primary-700">
-                          ${(selectedCategory.price * quantity * 0.90).toLocaleString(undefined, { maximumFractionDigits: 0 })}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Add to cart button */}
-                    <button
-                      onClick={handleAddToCart}
-                      disabled={addedToCart}
-                      className={`w-full mt-6 py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
-                        addedToCart
-                          ? "bg-green-500 text-white"
-                          : "bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 shadow-lg shadow-primary-500/25"
-                      }`}
-                    >
-                      {addedToCart ? (
-                        <>
-                          <Check className="w-4 h-4" />
-                          Added to Cart!
-                        </>
-                      ) : (
-                        <>
-                          <ShoppingCart className="w-4 h-4" />
-                          Add to Cart
-                        </>
-                      )}
-                    </button>
-
-                    <Link
-                      href="/checkout"
-                      className="block w-full mt-3 py-3 text-center text-sm font-semibold text-primary-600 hover:text-primary-700 border border-primary-200 rounded-xl hover:bg-primary-50 transition-all"
-                    >
-                      Proceed to Checkout
-                    </Link>
-                  </>
-                ) : (
-                  <div className="text-center py-8">
-                    <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-3">
-                      <Ticket className="w-7 h-7 text-primary-400" />
-                    </div>
-                    <p className="text-sm text-gray-500">Select a ticket category to get started</p>
-                  </div>
-                )}
+                <p className="text-sm text-gray-700 font-medium mb-4">Click any seat listing to add to cart and proceed to checkout.</p>
+                <Link
+                  href="/checkout"
+                  className="block w-full py-3 text-center text-sm font-semibold text-primary-600 hover:text-primary-700 border border-primary-200 rounded-xl hover:bg-primary-50 transition-all"
+                >
+                  Go to Checkout
+                </Link>
               </div>
 
               {/* Trust badges */}
