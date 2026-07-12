@@ -134,7 +134,7 @@ export default function CheckoutPage() {
 
                 {items.map((item) => (
                   <div
-                    key={`${item.match.id}-${item.category.id}`}
+                    key={item.itemKey}
                     className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-md transition-all"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center gap-4">
@@ -157,20 +157,27 @@ export default function CheckoutPage() {
                           </span>
                           <span className="text-xs text-gray-400">{item.category.section}</span>
                         </div>
+                        {item.seatSection && (
+                          <div className="mt-2 text-xs text-gray-500">
+                            <span className="font-medium text-gray-700">{item.seatSection}</span>
+                            {item.seatRow ? ` • Row ${item.seatRow}` : ""}
+                            {item.seatTickets ? ` • ${item.seatTickets} tickets` : ""}
+                          </div>
+                        )}
                       </div>
 
                       {/* Quantity + Price */}
                       <div className="flex items-center gap-6">
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => updateQuantity(item.match.id, item.category.id, item.quantity - 1)}
+                            onClick={() => updateQuantity(item.itemKey, item.quantity - 1)}
                             className="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
                           >
                             <Minus className="w-3 h-3" />
                           </button>
                           <span className="w-8 text-center font-bold text-sm">{item.quantity}</span>
                           <button
-                            onClick={() => updateQuantity(item.match.id, item.category.id, Math.min(10, item.quantity + 1))}
+                            onClick={() => updateQuantity(item.itemKey, Math.min(10, item.quantity + 1))}
                             className="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
                           >
                             <Plus className="w-3 h-3" />
@@ -179,13 +186,13 @@ export default function CheckoutPage() {
 
                         <div className="text-right">
                           <p className="font-bold text-gray-900 text-lg">
-                            ${(item.category.price * item.quantity).toLocaleString()}
+                            ${(item.price * item.quantity).toLocaleString()}
                           </p>
-                          <p className="text-xs text-gray-400">${item.category.price.toLocaleString()} each</p>
+                          <p className="text-xs text-gray-400">${item.price.toLocaleString()} each</p>
                         </div>
 
                         <button
-                          onClick={() => removeItem(item.match.id, item.category.id)}
+                          onClick={() => removeItem(item.itemKey)}
                           className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -287,7 +294,7 @@ export default function CheckoutPage() {
 
                 <div className="space-y-3 mb-6">
                   {items.map((item) => (
-                    <div key={`${item.match.id}-${item.category.id}`} className="flex items-start justify-between text-sm">
+                    <div key={item.itemKey} className="flex items-start justify-between text-sm">
                       <div className="flex-1 min-w-0 pr-2">
                         <p className="font-medium text-gray-900 truncate">
                           {item.match.teamA.code} vs {item.match.teamB.code}
@@ -297,7 +304,7 @@ export default function CheckoutPage() {
                         </p>
                       </div>
                       <p className="font-semibold text-gray-900 whitespace-nowrap">
-                        ${(item.category.price * item.quantity).toLocaleString()}
+                        ${(item.price * item.quantity).toLocaleString()}
                       </p>
                     </div>
                   ))}
