@@ -202,20 +202,6 @@ export default function CheckoutPage() {
                   </div>
                 ))}
 
-                <button
-                  onClick={() => setStep("details")}
-                  className="w-full mt-6 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl font-bold text-lg hover:from-primary-700 hover:to-primary-800 transition-all shadow-lg shadow-primary-500/25"
-                >
-                  Proceed to Checkout
-                </button>
-
-                <button
-                  onClick={clearCart}
-                  className="w-full py-3 text-sm text-gray-400 hover:text-red-500 font-medium rounded-xl hover:bg-red-50 transition-all flex items-center justify-center gap-2"
-                >
-                  <Trash2 className="w-4 h-4" />
-                  Clear Cart
-                </button>
               </div>
             )}
 
@@ -240,15 +226,6 @@ export default function CheckoutPage() {
                     To complete your purchase and receive your FIFA World Cup 2026 tickets, 
                     please chat with one of our agents who will guide you through the final steps.
                   </p>
-
-                  <button
-                    type="button"
-                    onClick={openLiveChat}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl font-bold text-lg hover:from-primary-700 hover:to-primary-800 transition-all shadow-lg shadow-primary-500/25"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    Start a Live Chat to Complete Your Order
-                  </button>
 
                   <div className="flex items-center justify-center gap-6 mt-8 text-sm text-gray-400">
                     <div className="flex items-center gap-1.5">
@@ -329,6 +306,35 @@ export default function CheckoutPage() {
                     <span>Total</span>
                     <span className="text-primary-700">${grandTotal.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
                   </div>
+
+                  {step === "cart" ? (
+                    <div className="pt-4 space-y-2">
+                      <button
+                        onClick={() => setStep("details")}
+                        className="w-full py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl font-semibold hover:from-primary-700 hover:to-primary-800 transition-all"
+                      >
+                        Proceed to Checkout
+                      </button>
+                      <button
+                        onClick={clearCart}
+                        className="w-full py-2.5 text-sm text-gray-400 hover:text-red-500 font-medium rounded-xl hover:bg-red-50 transition-all flex items-center justify-center gap-2"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        Clear Cart
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="pt-4">
+                      <button
+                        type="button"
+                        onClick={openLiveChat}
+                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl font-semibold hover:from-primary-700 hover:to-primary-800 transition-all"
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        Start a Live Chat to Complete Your Order
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
