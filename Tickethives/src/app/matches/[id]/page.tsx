@@ -45,7 +45,7 @@ export default function MatchDetailPage() {
 
   const lowestPrice = Math.min(...match.ticketCategories.map((c) => c.price));
   const totalAvailable = match.ticketCategories.reduce((s, c) => s + c.available, 0);
-  const seatListings = match.id === "match-101"
+  const seatListings = (match.id === "match-101"
     ? franceVsSpainSeats
     : match.id === "match-102"
       ? englandVsArgentinaSeats
@@ -53,7 +53,7 @@ export default function MatchDetailPage() {
         ? thirdPlacePlayoffSeats
         : match.id === "match-104"
           ? finalMatchSeats
-          : [];
+          : []).slice(0, 5);
   const seatCategoryMap = match.id === "match-101"
     ? { upper: "cat-101d", cat3: "cat-101d", cat2: "cat-101c", cat1: "cat-101b" }
     : match.id === "match-102"
