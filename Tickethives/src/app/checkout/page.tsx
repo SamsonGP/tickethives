@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Trash2, Minus, Plus, ShoppingBag, ArrowLeft,
   Lock, Check, Shield, CreditCard,
 } from "lucide-react";
+import { EmbeddedStripeCheckout } from "@/components/EmbeddedStripeCheckout";
 import { useCart } from "@/context/CartContext";
-import { stripePaymentLinks } from "@/data/matches";
 
 export default function CheckoutPage() {
   const { items, removeItem, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
@@ -15,9 +15,53 @@ export default function CheckoutPage() {
 
   const discount = totalPrice * 0.10;
   const grandTotal = totalPrice - discount;
-  const stripePaymentLink = items.length > 0 && items.every((item) => item.match.id === items[0].match.id)
-    ? stripePaymentLinks[items[0].match.id]
-    : undefined;
+  const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [isCreatingPayment, setIsCreatingPayment] = useState(false);
+  const [checkoutClientSecret, setCheckoutClientSecret] = useState<string | null>(null);
+  const [customerName, setCustomerName] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const stripeCheckoutItems = items.length > 0 ? items : undefined;
+  const hasContactDetails = customerName.trim().length > 0
+    && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail.trim())
+    && customerPhone.trim().length > 0;
+
+  useEffect(() => {
+    if (checkoutClientSecret) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [checkoutClientSecret]);
+
+  const startStripeCheckout = async () => {
+    if (!stripeCheckoutItems) return;
+
+    setPaymentError(null);
+    setIsCreatingPayment(true);
+    try {
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: stripeCheckoutItems.map((item) => ({
+            matchId: item.match.id,
+            unitPrice: item.price,
+            quantity: item.quantity,
+            section: item.seatSection,
+            row: item.seatRow,
+          })),
+        }),
+      });
+      const result = await response.json() as { clientSecret?: string; error?: string };
+      if (!response.ok || !result.clientSecret) {
+        throw new Error(result.error ?? "Unable to start secure checkout.");
+      }
+      setCheckoutClientSecret(result.clientSecret);
+    } catch (error) {
+      setPaymentError(error instanceof Error ? error.message : "Unable to start secure checkout.");
+    } finally {
+      setIsCreatingPayment(false);
+    }
+  };
 
   // Empty cart
   if (items.length === 0 && step === "cart") {
@@ -193,38 +237,65 @@ export default function CheckoutPage() {
               <div className="space-y-6">
                 <button
                   type="button"
-                  onClick={() => setStep("cart")}
+                  onClick={() => {
+                    setCheckoutClientSecret(null);
+                    setStep("cart");
+                  }}
                   className="inline-flex items-center gap-2 text-sm text-primary-600 font-medium hover:text-primary-700 mb-4"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Back to Cart
                 </button>
 
-                {/* Secure payment completion */}
-                <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
-                  <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <CreditCard className="w-8 h-8 text-primary-600" />
+                {checkoutClientSecret ? (
+                  <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6">
+                    <EmbeddedStripeCheckout clientSecret={checkoutClientSecret} />
                   </div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-3">Secure Payment</h2>
-                  <p className="text-gray-500 leading-relaxed mb-8 max-w-md mx-auto">
-                    Complete your payment securely with Stripe. Your payment details are handled directly by Stripe.
-                  </p>
+                ) : (
+                  <div className="bg-white rounded-2xl border border-gray-200 p-8">
+                    <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                      <CreditCard className="w-8 h-8 text-primary-600" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Your Information</h2>
 
-                  <div className="flex items-center justify-center gap-6 mt-8 text-sm text-gray-400">
-                    <div className="flex items-center gap-1.5">
-                      <Lock className="w-3.5 h-3.5" />
-                      <span>Secure</span>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <label className="sm:col-span-2 text-sm font-medium text-gray-700">
+                        Full name
+                        <input
+                          type="text"
+                          value={customerName}
+                          onChange={(event) => setCustomerName(event.target.value)}
+                          autoComplete="name"
+                          required
+                          className="mt-1.5 w-full rounded-xl border border-gray-300 px-3 py-2.5 text-gray-900 outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        />
+                      </label>
+                      <label className="text-sm font-medium text-gray-700">
+                        Email address
+                        <input
+                          type="email"
+                          value={customerEmail}
+                          onChange={(event) => setCustomerEmail(event.target.value)}
+                          autoComplete="email"
+                          required
+                          className="mt-1.5 w-full rounded-xl border border-gray-300 px-3 py-2.5 text-gray-900 outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        />
+                      </label>
+                      <label className="text-sm font-medium text-gray-700">
+                        Phone number
+                        <input
+                          type="tel"
+                          value={customerPhone}
+                          onChange={(event) => setCustomerPhone(event.target.value)}
+                          autoComplete="tel"
+                          required
+                          className="mt-1.5 w-full rounded-xl border border-gray-300 px-3 py-2.5 text-gray-900 outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        />
+                      </label>
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <Shield className="w-3.5 h-3.5" />
-                      <span>Guaranteed</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <Check className="w-3.5 h-3.5" />
-                      <span>Verified</span>
-                    </div>
+                    <p className="mt-4 text-center text-xs text-gray-400"></p>
                   </div>
-                </div>
+                )}
 
                 {/* Payment details */}
                 <div className="bg-primary-50 rounded-2xl border border-primary-100 p-6">
@@ -306,16 +377,19 @@ export default function CheckoutPage() {
                         Clear Cart
                       </button>
                     </div>
-                  ) : stripePaymentLink ? (
+                  ) : stripeCheckoutItems ? (
                     <div className="pt-4">
                       <button
                         type="button"
-                        onClick={() => window.location.assign(stripePaymentLink)}
-                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl font-semibold hover:from-primary-700 hover:to-primary-800 transition-all"
+                        onClick={startStripeCheckout}
+                        disabled={!hasContactDetails || isCreatingPayment || Boolean(checkoutClientSecret)}
+                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl font-semibold transition-all hover:from-primary-700 hover:to-primary-800 disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         <CreditCard className="w-4 h-4" />
-                        Pay securely with Stripe
+                        {isCreatingPayment ? "Loading payment form..." : checkoutClientSecret ? "Payment form ready" : "Pay securely with Stripe"}
                       </button>
+                      {!hasContactDetails && <p className="mt-2 text-xs text-gray-500">Enter your name, email address, and phone number to continue.</p>}
+                      {paymentError && <p className="mt-2 text-sm text-red-600">{paymentError}</p>}
                     </div>
                   ) : (
                     <p className="pt-4 text-sm text-gray-500">
