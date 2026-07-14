@@ -74,14 +74,17 @@ export default function MatchDetailPage() {
   const confirmSeatAction = (action: "cart" | "checkout") => {
     if (!pendingSeat) return;
 
-    const cat = match.ticketCategories.find((c) => c.id === pendingSeat.catId);
-    if (cat) {
-      addItem(match, cat, 1, pendingSeat.listing?.price ?? cat.price, pendingSeat.listing);
-      setPendingSeat(null);
+    if (action === "cart") {
+      const cat = match.ticketCategories.find((c) => c.id === pendingSeat.catId);
+      if (!cat) return;
 
-      if (action === "checkout") {
-        router.push("/checkout");
-      }
+      addItem(match, cat, 1, pendingSeat.listing?.price ?? cat.price, pendingSeat.listing);
+    }
+
+    setPendingSeat(null);
+
+    if (action === "checkout") {
+      router.push("/checkout");
     }
   };
 
