@@ -11,15 +11,13 @@ interface MatchCardProps {
 export default function MatchCard({ match, variant = "default" }: MatchCardProps) {
   const lowestPrice = Math.min(...match.ticketCategories.map((c) => c.price));
   const displayPrice =
-    match.id === "match-101"
-      ? 700
-      : match.id === "match-102"
-        ? 1500
-        : match.id === "match-103"
-          ? 700
-          : match.id === "match-104"
-            ? 4200
-            : lowestPrice;
+    match.id === "match-102"
+      ? 1500
+      : match.id === "match-103"
+        ? 700
+        : match.id === "match-104"
+          ? 4200
+          : lowestPrice;
   const totalAvailable = match.ticketCategories.reduce((s, c) => s + c.available, 0);
 
   const formatDate = (dateStr: string) => {
