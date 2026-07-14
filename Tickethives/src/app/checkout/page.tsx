@@ -4,9 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   Trash2, Minus, Plus, ShoppingBag, ArrowLeft,
-  Lock, Check, Shield, MessageCircle,
+  Lock, Check, Shield, CreditCard,
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { stripePaymentLinks } from "@/data/matches";
 
 export default function CheckoutPage() {
   const { items, removeItem, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
@@ -14,26 +15,9 @@ export default function CheckoutPage() {
 
   const discount = totalPrice * 0.10;
   const grandTotal = totalPrice - discount;
-
-  const openLiveChat = () => {
-    // Fire Google Ads purchase conversion
-    const gtag = (window as unknown as Record<string, unknown>).gtag as ((...args: unknown[]) => void) | undefined;
-    if (typeof gtag === "function") {
-      gtag("event", "conversion", {
-        send_to: "AW-18314430129/wj_9CKDRsc4cELGNgJ1E",
-        value: grandTotal,
-        currency: "USD",
-        transaction_id: `TH-${Date.now()}`,
-      });
-    }
-
-    const Tawk_API = (window as unknown as Record<string, unknown>).Tawk_API as Record<string, unknown> | undefined;
-    if (Tawk_API && typeof Tawk_API.openChat === "function") {
-      (Tawk_API.openChat as () => void)();
-    } else if (Tawk_API && typeof Tawk_API.maximize === "function") {
-      (Tawk_API.maximize as () => void)();
-    }
-  };
+  const stripePaymentLink = items.length > 0 && items.every((item) => item.match.id === items[0].match.id)
+    ? stripePaymentLinks[items[0].match.id]
+    : undefined;
 
   // Empty cart
   if (items.length === 0 && step === "cart") {
@@ -216,15 +200,14 @@ export default function CheckoutPage() {
                   Back to Cart
                 </button>
 
-                {/* Live chat completion */}
+                {/* Secure payment completion */}
                 <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
                   <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <MessageCircle className="w-8 h-8 text-primary-600" />
+                    <CreditCard className="w-8 h-8 text-primary-600" />
                   </div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-3">Complete Your Order</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-3">Secure Payment</h2>
                   <p className="text-gray-500 leading-relaxed mb-8 max-w-md mx-auto">
-                    To complete your purchase and receive your FIFA World Cup 2026 tickets, 
-                    please chat with one of our agents who will guide you through the final steps.
+                    Complete your payment securely with Stripe. Your payment details are handled directly by Stripe.
                   </p>
 
                   <div className="flex items-center justify-center gap-6 mt-8 text-sm text-gray-400">
@@ -243,14 +226,14 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                {/* What to expect */}
+                {/* Payment details */}
                 <div className="bg-primary-50 rounded-2xl border border-primary-100 p-6">
                   <h3 className="font-semibold text-primary-900 mb-4">What to Expect</h3>
                   <ul className="space-y-3">
                     {[
-                      "Our agent will confirm your ticket selection and seat details",
-                      "You'll receive secure payment instructions",
-                      "E-tickets are delivered instantly after confirmation",
+                      "Your payment is processed securely by Stripe",
+                      "Your selected fixture and seat details remain in your order",
+                      "E-tickets are delivered after payment confirmation",
                     ].map((item) => (
                       <li key={item} className="flex items-start gap-3 text-sm text-primary-700">
                         <Check className="w-4 h-4 text-primary-600 mt-0.5 shrink-0" />
@@ -323,17 +306,21 @@ export default function CheckoutPage() {
                         Clear Cart
                       </button>
                     </div>
-                  ) : (
+                  ) : stripePaymentLink ? (
                     <div className="pt-4">
                       <button
                         type="button"
-                        onClick={openLiveChat}
+                        onClick={() => window.location.assign(stripePaymentLink)}
                         className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl font-semibold hover:from-primary-700 hover:to-primary-800 transition-all"
                       >
-                        <MessageCircle className="w-4 h-4" />
-                        Start a Live Chat to Complete Your Order
+                        <CreditCard className="w-4 h-4" />
+                        Pay securely with Stripe
                       </button>
                     </div>
+                  ) : (
+                    <p className="pt-4 text-sm text-gray-500">
+                      Please check out one fixture at a time to use its secure payment link.
+                    </p>
                   )}
                 </div>
               </div>
