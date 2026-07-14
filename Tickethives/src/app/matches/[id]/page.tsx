@@ -53,7 +53,7 @@ export default function MatchDetailPage() {
         ? thirdPlacePlayoffSeats
         : match.id === "match-104"
           ? finalMatchSeats
-          : []).slice(0, 5);
+          : []).slice(0, 1);
   const seatCategoryMap = match.id === "match-101"
     ? { upper: "cat-101d", cat3: "cat-101d", cat2: "cat-101c", cat1: "cat-101b" }
     : match.id === "match-102"
