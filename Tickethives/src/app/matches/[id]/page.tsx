@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { getMatchById } from "@/data/matches";
 import { useCart } from "@/context/CartContext";
-import { englandVsArgentinaSeats, finalMatchSeats, franceVsSpainSeats, seatCategoryLabels, thirdPlacePlayoffSeats } from "@/data/seatListings";
+import { englandVsArgentinaSeats, finalMatchSeats, seatCategoryLabels, thirdPlacePlayoffSeats } from "@/data/seatListings";
 
 type SeatListingSelection = {
   price: number;
@@ -45,18 +45,14 @@ export default function MatchDetailPage() {
 
   const lowestPrice = Math.min(...match.ticketCategories.map((c) => c.price));
   const totalAvailable = match.ticketCategories.reduce((s, c) => s + c.available, 0);
-  const seatListings = (match.id === "match-101"
-    ? franceVsSpainSeats
-    : match.id === "match-102"
-      ? englandVsArgentinaSeats
-      : match.id === "match-103"
-        ? thirdPlacePlayoffSeats
-        : match.id === "match-104"
-          ? finalMatchSeats
-          : []).slice(0, 10);
-  const seatCategoryMap = match.id === "match-101"
-    ? { upper: "cat-101d", cat3: "cat-101d", cat2: "cat-101c", cat1: "cat-101b" }
-    : match.id === "match-102"
+  const seatListings = (match.id === "match-102"
+    ? englandVsArgentinaSeats
+    : match.id === "match-103"
+      ? thirdPlacePlayoffSeats
+      : match.id === "match-104"
+        ? finalMatchSeats
+        : []).slice(0, 10);
+  const seatCategoryMap = match.id === "match-102"
       ? { upper: "cat-102d", cat3: "cat-102d", cat2: "cat-102c", cat1: "cat-102b" }
       : match.id === "match-103"
         ? { upper: "cat-103d", cat3: "cat-103d", cat2: "cat-103c", cat1: "cat-103b" }
