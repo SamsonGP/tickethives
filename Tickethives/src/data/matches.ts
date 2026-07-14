@@ -91,4 +91,11 @@ export function getMatchesByStage(stage: string): Match[] {
   return matches.filter((m) => m.stage === stage);
 }
 
+export const stripePaymentLinks: Record<string, string> = {
+  "match-101": "https://buy.stripe.com/eVqfZh7Sq9qs5QO4yZ08g04",
+  "match-102": "https://buy.stripe.com/14A8wPdcKbyA3IG5D308g05",
+  "match-103": "https://buy.stripe.com/5kQaEX3Ca3246USc1r08g06",
+  "match-104": "https://buy.stripe.com/eVq14n5KifOQdjg1mN08g07",
+};
+
 export const stages = ["All", "Semi-Final", "Third Place Play-Off", "Final"];
