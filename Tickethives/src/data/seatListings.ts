@@ -31,7 +31,7 @@ const getDiscountedPrice = (originalPrice: number, variant: "standard" | "final"
 
 export const franceVsSpainSeats: SeatListing[] = [
   // ==================== UPPER TIER (unlabeled) ====================
-  { section: "422", row: "12", tickets: "1–3", rating: 8.9, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1043, price: 743, category: "upper" },
+  { section: "422", row: "12", tickets: "1–3", rating: 8.9, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 850, price: 850, category: "upper" },
   { section: "420", row: "21", tickets: "1", rating: 8.3, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1043, price: 743, category: "upper" },
   { section: "423", row: "16", tickets: "1", rating: 8.3, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1062, price: 762, category: "upper" },
   { section: "Block 450", row: "19", tickets: "1–4", rating: 8.1, ratingLabel: "Great", originalPrice: 1066, price: 766, category: "upper" },
@@ -87,10 +87,10 @@ export const franceVsSpainSeats: SeatListing[] = [
   { section: "149", row: "14", tickets: "1–3", rating: 10.0, ratingLabel: "Fantastic", originalPrice: 2179, price: 1579, category: "cat1" },
   { section: "217", row: "1", tickets: "1–4", rating: 9.3, ratingLabel: "Excellent", badge: "Front of Section", originalPrice: 2303, price: 1703, category: "cat1" },
   { section: "149", row: "11", tickets: "1–3", rating: 10.0, ratingLabel: "Fantastic", originalPrice: 2312, price: 1712, category: "cat1" },
-].slice(0, 5);
+].slice(0, 1);
 
 export const englandVsArgentinaSeats: SeatListing[] = [
-  { section: "328", row: "16", tickets: "1–3", rating: 8.6, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 2105, price: getDiscountedPrice(2105), category: "upper" },
+  { section: "328", row: "16", tickets: "1–3", rating: 8.6, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1600, price: 1600, category: "upper" },
   { section: "332", row: "11", tickets: "1–4", rating: 8.7, ratingLabel: "Great", originalPrice: 2220, price: getDiscountedPrice(2220), category: "upper" },
   { section: "317", row: "22", tickets: "1–4", rating: 7.9, ratingLabel: "Very Good", originalPrice: 2304, price: getDiscountedPrice(2304), category: "upper" },
   { section: "317", row: "24", tickets: "1–4", rating: 7.6, ratingLabel: "Very Good", originalPrice: 2304, price: getDiscountedPrice(2304), category: "upper" },
@@ -190,10 +190,10 @@ export const englandVsArgentinaSeats: SeatListing[] = [
   { section: "135", row: "33", tickets: "1–4", rating: 8.1, ratingLabel: "Great", originalPrice: 3246, price: getDiscountedPrice(3246), category: "upper" },
   { section: "308", row: "18", tickets: "1–4", originalPrice: 3249, price: getDiscountedPrice(3249), category: "upper" },
   { section: "246", row: "8", tickets: "1–2", rating: 7.9, ratingLabel: "Very Good", originalPrice: 3259, price: getDiscountedPrice(3259), category: "upper" },
-].slice(0, 5);
+].slice(0, 1);
 
 export const thirdPlacePlayoffSeats: SeatListing[] = [
-  { section: "209", row: "21", tickets: "1", rating: 8.9, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1020, price: getDiscountedPrice(1020), category: "upper" },
+  { section: "209", row: "21", tickets: "1", rating: 8.9, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1150, price: 1150, category: "upper" },
   { section: "329", row: "20", tickets: "1", rating: 8.7, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1020, price: getDiscountedPrice(1020), category: "upper" },
   { section: "307", row: "22", tickets: "1–4", rating: 8.0, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1105, price: getDiscountedPrice(1105), category: "upper" },
   { section: "322", row: "28", tickets: "1", rating: 7.9, ratingLabel: "Very Good", badge: "Lowest Price in Section", originalPrice: 1105, price: getDiscountedPrice(1105), category: "upper" },
@@ -247,10 +247,10 @@ export const thirdPlacePlayoffSeats: SeatListing[] = [
   { section: "231", row: "2", tickets: "1–4", rating: 9.7, ratingLabel: "Excellent", originalPrice: 1620, price: getDiscountedPrice(1620), category: "cat2" },
   { section: "101", row: "22", tickets: "1–4", rating: 8.4, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 1624, price: getDiscountedPrice(1624), category: "cat2" },
   { section: "202", row: "2", tickets: "1–4", rating: 9.9, ratingLabel: "Excellent", originalPrice: 1631, price: getDiscountedPrice(1631), category: "cat2" },
-].slice(0, 5);
+].slice(0, 1);
 
 export const finalMatchSeats: SeatListing[] = [
-  { section: "331", row: "21", tickets: "1", rating: 8.9, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 5267, price: getDiscountedPrice(5267, "final"), category: "upper" },
+  { section: "331", row: "21", tickets: "1", rating: 8.9, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 4400, price: 4400, category: "upper" },
   { section: "Block 322", row: "18", tickets: "1–4", rating: 9.3, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 5318, price: getDiscountedPrice(5318, "final"), category: "upper" },
   { section: "310", row: "24", tickets: "1–2", rating: 8.3, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 5344, price: getDiscountedPrice(5344, "final"), category: "upper" },
   { section: "333", row: "26", tickets: "1", rating: 9.0, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 5411, price: getDiscountedPrice(5411, "final"), category: "upper" },
@@ -318,7 +318,7 @@ export const finalMatchSeats: SeatListing[] = [
   { section: "148", row: "27", tickets: "1", rating: 9.0, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 9337, price: getDiscountedPrice(9337, "final"), category: "cat1" },
   { section: "149", row: "44", tickets: "1–4", rating: 7.7, ratingLabel: "Very Good", originalPrice: 9344, price: getDiscountedPrice(9344, "final"), category: "cat1" },
   { section: "319", row: "24", tickets: "1", originalPrice: 9346, price: getDiscountedPrice(9346, "final"), category: "cat1" },
-].slice(0, 5);
+].slice(0, 1);
 
 export const seatCategoryLabels: Record<string, string> = {
   upper: "Upper Tier",
