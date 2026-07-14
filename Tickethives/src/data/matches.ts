@@ -3,24 +3,6 @@ import { Match } from "@/types";
 export const matches: Match[] = [
   // ==================== SEMI-FINALS ====================
   {
-    id: "match-101",
-    matchNumber: 101,
-    stage: "Semi-Final",
-    teamA: { name: "France", code: "FRA", flag: "🇫🇷" },
-    teamB: { name: "Spain", code: "ESP", flag: "🇪🇸" },
-    venue: { name: "AT&T Stadium", city: "Arlington, TX", country: "USA", capacity: 80000 },
-    date: "2026-07-14",
-    time: "14:00",
-    image: "/stadium/france-vs-spain.png",
-    featured: true,
-    ticketCategories: [
-      { id: "cat-101a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 6500, available: 40, section: "VIP Level" },
-      { id: "cat-101b", name: "Category 1", description: "Premium seats with excellent pitch views", price: 2200, available: 160, section: "Lower Tier" },
-      { id: "cat-101c", name: "Category 2", description: "Great views of the action from mid-tier seating", price: 1350, available: 350, section: "Mid Tier" },
-      { id: "cat-101d", name: "Category 3", description: "Affordable seats with electric atmosphere", price: 650, available: 700, section: "Upper Tier" },
-    ],
-  },
-  {
     id: "match-102",
     matchNumber: 102,
     stage: "Semi-Final",
@@ -92,7 +74,6 @@ export function getMatchesByStage(stage: string): Match[] {
 }
 
 export const stripePaymentLinks: Record<string, string> = {
-  "match-101": "https://buy.stripe.com/eVqfZh7Sq9qs5QO4yZ08g04",
   "match-102": "https://buy.stripe.com/14A8wPdcKbyA3IG5D308g05",
   "match-103": "https://buy.stripe.com/5kQaEX3Ca3246USc1r08g06",
   "match-104": "https://buy.stripe.com/eVq14n5KifOQdjg1mN08g07",
