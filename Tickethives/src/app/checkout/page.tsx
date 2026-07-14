@@ -27,10 +27,10 @@ export default function CheckoutPage() {
     && customerPhone.trim().length > 0;
 
   useEffect(() => {
-    if (checkoutClientSecret) {
+    if (step === "details" || checkoutClientSecret) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }, [checkoutClientSecret]);
+  }, [checkoutClientSecret, step]);
 
   const startStripeCheckout = async () => {
     if (!stripeCheckoutItems) return;
