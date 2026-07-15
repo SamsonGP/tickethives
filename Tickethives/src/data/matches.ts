@@ -1,32 +1,13 @@
 import { Match } from "@/types";
 
 export const matches: Match[] = [
-  // ==================== SEMI-FINALS ====================
-  {
-    id: "match-102",
-    matchNumber: 102,
-    stage: "Semi-Final",
-    teamA: { name: "England", code: "ENG", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
-    teamB: { name: "Argentina", code: "ARG", flag: "🇦🇷" },
-    venue: { name: "Mercedes-Benz Stadium", city: "Atlanta, GA", country: "USA", capacity: 71000 },
-    date: "2026-07-15",
-    time: "15:00",
-    image: "/stadium/Argentina.png",
-    featured: true,
-    ticketCategories: [
-      { id: "cat-102a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 6500, available: 38, section: "VIP Level" },
-      { id: "cat-102b", name: "Category 1", description: "Premium seats with excellent pitch views", price: 2200, available: 155, section: "Lower Tier" },
-      { id: "cat-102c", name: "Category 2", description: "Great views of the action from mid-tier seating", price: 1350, available: 340, section: "Mid Tier" },
-      { id: "cat-102d", name: "Category 3", description: "Affordable seats with electric atmosphere", price: 650, available: 680, section: "Upper Tier" },
-    ],
-  },
   // ==================== THIRD PLACE PLAY-OFF ====================
   {
     id: "match-103",
     matchNumber: 103,
     stage: "Third Place Play-Off",
-    teamA: { name: "Loser SF1", code: "LSF1", flag: "🏳️" },
-    teamB: { name: "Loser SF2", code: "LSF2", flag: "🏳️" },
+    teamA: { name: "France", code: "FRA", flag: "🇫🇷" },
+    teamB: { name: "England", code: "ENG", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
     venue: { name: "Hard Rock Stadium", city: "Miami, FL", country: "USA", capacity: 65326 },
     date: "2026-07-18",
     time: "22:00",
@@ -44,8 +25,8 @@ export const matches: Match[] = [
     id: "match-104",
     matchNumber: 104,
     stage: "Final",
-    teamA: { name: "Winner SF1", code: "SF1", flag: "🏳️" },
-    teamB: { name: "Winner SF2", code: "SF2", flag: "🏳️" },
+    teamA: { name: "Spain", code: "ESP", flag: "🇪🇸" },
+    teamB: { name: "Argentina", code: "ARG", flag: "🇦🇷" },
     venue: { name: "MetLife Stadium", city: "East Rutherford, NJ", country: "USA", capacity: 82500 },
     date: "2026-07-19",
     time: "20:00",
@@ -74,9 +55,8 @@ export function getMatchesByStage(stage: string): Match[] {
 }
 
 export const stripePaymentLinks: Record<string, string> = {
-  "match-102": "https://buy.stripe.com/14A8wPdcKbyA3IG5D308g05",
   "match-103": "https://buy.stripe.com/5kQaEX3Ca3246USc1r08g06",
   "match-104": "https://buy.stripe.com/eVq14n5KifOQdjg1mN08g07",
 };
 
-export const stages = ["All", "Semi-Final", "Third Place Play-Off", "Final"];
+export const stages = ["All", "Third Place Play-Off", "Final"];
