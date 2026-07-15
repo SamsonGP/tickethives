@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import { englandVsArgentinaSeats, finalMatchSeats, thirdPlacePlayoffSeats } from "@/data/seatListings";
+import { finalMatchSeats, thirdPlacePlayoffSeats } from "@/data/seatListings";
 import { getMatchById } from "@/data/matches";
 
 const seatPricesByMatch: Record<string, number[]> = {
-  "match-102": englandVsArgentinaSeats.map((listing) => listing.price),
   "match-103": thirdPlacePlayoffSeats.map((listing) => listing.price),
   "match-104": finalMatchSeats.map((listing) => listing.price),
 };
