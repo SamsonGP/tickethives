@@ -81,9 +81,9 @@ export default function HomePage() {
               {/* Stats */}
               <div className="flex flex-wrap justify-center lg:justify-start gap-6 sm:gap-8 lg:gap-12 animate-slide-up" style={{ animationDelay: "0.4s" }}>
                 {[
-                  { value: "3", label: "Matches Left" },
+                  { value: "2", label: "Matches Left" },
                   { value: "4", label: "Teams Remain" },
-                  { value: "3", label: "Rounds to Go" },
+                  { value: "2", label: "Rounds to Go" },
                   { value: "1", label: "Champion" },
                 ].map((stat) => (
                   <div key={stat.label}>
