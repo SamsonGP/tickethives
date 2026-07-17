@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, HelpCircle, ChevronDown, MessageCircle } from "lucide-react";
+import { TICKET_DISCOUNT_PERCENT } from "@/lib/pricing";
 
 const faqs = [
   {
@@ -39,7 +40,7 @@ const faqs = [
       },
       {
         q: "Are the prices shown final?",
-        a: "The prices displayed include our standard 10% promotional discount. There are no hidden fees or service charges. The final amount you pay is confirmed by our agent before processing.",
+        a: `The prices displayed include our standard ${TICKET_DISCOUNT_PERCENT}% promotional discount. There are no hidden fees or service charges. The final amount you pay is confirmed by our agent before processing.`,
       },
       {
         q: "Can I buy tickets for someone else?",
