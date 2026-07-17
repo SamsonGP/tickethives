@@ -14,9 +14,9 @@ export default function MatchCard({ match, variant = "default" }: MatchCardProps
     match.id === "match-102"
       ? 1500
       : match.id === "match-103"
-        ? 700
-        : match.id === "match-104"
-          ? 4200
+      ? 700
+      : match.id === "match-104"
+          ? 1386
           : lowestPrice;
   const totalAvailable = match.ticketCategories.reduce((s, c) => s + c.available, 0);
 
