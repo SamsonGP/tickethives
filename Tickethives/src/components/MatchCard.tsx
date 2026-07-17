@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react";
 import { Match } from "@/types";
+import { TICKET_DISCOUNT_PERCENT } from "@/lib/pricing";
 
 interface MatchCardProps {
   match: Match;
@@ -108,7 +109,7 @@ export default function MatchCard({ match, variant = "default" }: MatchCardProps
                 <div className="flex items-center gap-2 mb-1">
                   <p className="text-primary-400 text-xs">Tickets from</p>
                   <span className="px-2 py-0.5 bg-green-400/20 text-green-300 text-[10px] font-bold rounded border border-green-400/30">
-                    10% OFF
+                    {TICKET_DISCOUNT_PERCENT}% OFF
                   </span>
                 </div>
                 <p className="text-2xl font-bold text-white">${displayPrice.toLocaleString()}</p>
@@ -214,7 +215,7 @@ export default function MatchCard({ match, variant = "default" }: MatchCardProps
               <div className="flex items-center gap-2 mb-1">
                 <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium">From</p>
                 <span className="px-1.5 py-0.5 bg-green-100 text-green-700 text-[9px] font-bold rounded">
-                  10% OFF
+                  {TICKET_DISCOUNT_PERCENT}% OFF
                 </span>
               </div>
               <p className="text-xl font-bold text-primary-700">${displayPrice.toLocaleString()}</p>
