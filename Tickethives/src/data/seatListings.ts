@@ -1,3 +1,5 @@
+import { TICKET_DISCOUNT_RATE } from "@/lib/pricing";
+
 export interface SeatListing {
   section: string;
   row: string;
@@ -19,7 +21,7 @@ export interface SeatListing {
 
 const getDiscountedPrice = (originalPrice: number, variant: "standard" | "final" = "standard") => {
   if (variant === "final") {
-    return Math.round(Math.min(originalPrice * 0.35, 2200) * 0.9);
+    return Math.round(Math.min(originalPrice * 0.35, 2200) * (1 - TICKET_DISCOUNT_RATE));
   }
 
   if (originalPrice <= 500) return originalPrice - 100;
