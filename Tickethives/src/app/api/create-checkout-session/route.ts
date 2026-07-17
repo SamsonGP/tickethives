@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { finalMatchSeats, thirdPlacePlayoffSeats } from "@/data/seatListings";
 import { getMatchById } from "@/data/matches";
+import { applyTicketDiscount } from "@/lib/pricing";
 
 const seatPricesByMatch: Record<string, number[]> = {
   "match-103": thirdPlacePlayoffSeats.map((listing) => listing.price),
@@ -59,7 +60,7 @@ export async function POST(request: Request) {
 
       params.set(`line_items[${index}][price_data][currency]`, "usd");
       params.set(`line_items[${index}][price_data][product_data][name]`, productName);
-      params.set(`line_items[${index}][price_data][unit_amount]`, String(Math.round(item.unitPrice * 0.9) * 100));
+      params.set(`line_items[${index}][price_data][unit_amount]`, String(applyTicketDiscount(item.unitPrice) * 100));
       params.set(`line_items[${index}][quantity]`, String(item.quantity));
     });
 
