@@ -33,10 +33,10 @@ export const matches: Match[] = [
     image: "/stadium/final.png",
     featured: true,
     ticketCategories: [
-      { id: "cat-104a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 8500, available: 25, section: "VIP Level" },
-      { id: "cat-104b", name: "Category 1", description: "Premium seats with excellent pitch views", price: 3600, available: 100, section: "Lower Tier" },
-      { id: "cat-104c", name: "Category 2", description: "Great views of the action from mid-tier seating", price: 1900, available: 220, section: "Mid Tier" },
-      { id: "cat-104d", name: "Category 3", description: "Affordable seats with electric atmosphere", price: 1000, available: 450, section: "Upper Tier" },
+      { id: "cat-104a", name: "Premium Hospitality", description: "VIP lounge with premium catering and the best seats in the house", price: 1800, available: 25, section: "VIP Level" },
+      { id: "cat-104b", name: "Category 1", description: "Premium seats with excellent pitch views", price: 1620, available: 10, section: "Lower Tier" },
+      { id: "cat-104c", name: "Category 2", description: "Great views of the action from mid-tier seating", price: 1350, available: 20, section: "Mid Tier" },
+      { id: "cat-104d", name: "Category 3", description: "Affordable seats with electric atmosphere", price: 900, available: 10, section: "Upper Tier" },
     ],
   },
 ];
