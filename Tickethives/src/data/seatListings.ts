@@ -19,8 +19,7 @@ export interface SeatListing {
 
 const getDiscountedPrice = (originalPrice: number, variant: "standard" | "final" = "standard") => {
   if (variant === "final") {
-    if (originalPrice <= 7000) return originalPrice - 1000;
-    return originalPrice - 2000;
+    return Math.round(Math.min(originalPrice * 0.35, 2200) * 0.9);
   }
 
   if (originalPrice <= 500) return originalPrice - 100;
@@ -250,7 +249,7 @@ export const thirdPlacePlayoffSeats: SeatListing[] = [
 ];
 
 export const finalMatchSeats: SeatListing[] = [
-  { section: "331", row: "21", tickets: "1", rating: 8.9, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 4400, price: 4400, category: "upper" },
+  { section: "331", row: "21", tickets: "1", rating: 8.9, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 4400, price: 1386, category: "upper" },
   { section: "Block 322", row: "18", tickets: "1–4", rating: 9.3, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 5318, price: getDiscountedPrice(5318, "final"), category: "upper" },
   { section: "310", row: "24", tickets: "1–2", rating: 8.3, ratingLabel: "Great", badge: "Lowest Price in Section", originalPrice: 5344, price: getDiscountedPrice(5344, "final"), category: "upper" },
   { section: "333", row: "26", tickets: "1", rating: 9.0, ratingLabel: "Excellent", badge: "Lowest Price in Section", originalPrice: 5411, price: getDiscountedPrice(5411, "final"), category: "upper" },
