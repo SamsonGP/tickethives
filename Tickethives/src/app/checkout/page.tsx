@@ -8,12 +8,13 @@ import {
 } from "lucide-react";
 import { EmbeddedStripeCheckout } from "@/components/EmbeddedStripeCheckout";
 import { useCart } from "@/context/CartContext";
+import { TICKET_DISCOUNT_PERCENT, TICKET_DISCOUNT_RATE } from "@/lib/pricing";
 
 export default function CheckoutPage() {
   const { items, removeItem, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
   const [step, setStep] = useState<"cart" | "details">("cart");
 
-  const discount = totalPrice * 0.10;
+  const discount = totalPrice * TICKET_DISCOUNT_RATE;
   const grandTotal = totalPrice - discount;
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const [isCreatingPayment, setIsCreatingPayment] = useState(false);
@@ -132,7 +133,7 @@ export default function CheckoutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-center gap-2 text-white text-sm font-semibold">
             <span className="px-2 py-0.5 bg-white/20 rounded text-xs">LIMITED TIME</span>
-            <span>10% off every ticket — applied automatically at checkout</span>
+            <span>{TICKET_DISCOUNT_PERCENT}% off every ticket — applied automatically at checkout</span>
           </div>
         </div>
       </div>
@@ -353,7 +354,7 @@ export default function CheckoutPage() {
                     <span className="font-medium">${totalPrice.toLocaleString()}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-500">Discount (10%)</span>
+                    <span className="text-gray-500">Discount ({TICKET_DISCOUNT_PERCENT}%)</span>
                     <span className="font-medium text-green-600">-${discount.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
                   </div>
                   <div className="flex items-center justify-between text-lg font-bold pt-3 border-t border-gray-100">
